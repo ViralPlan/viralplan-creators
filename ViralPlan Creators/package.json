@@ -8,9 +8,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/coreui": "^4.3.2",
+    "@coreui/vue": "^4.10.1",
+    "abort-controller": "^3.0.0",
     "flowbite": "^1.8.1",
     "flowbite-vue": "^0.1.0",
+    "fs": "^0.0.1-security",
+    "memfs": "^4.6.0",
+    "mongodb": "^6.2.0",
+    "node-fetch": "^3.3.2",
+    "node-stdlib-browser": "^1.2.0",
     "pinia": "^2.1.7",
+    "realm-web": "^2.0.0",
+    "vite-plugin-node-polyfills": "^0.15.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vuetify": "^3.3.22"

@@ -16,7 +16,6 @@ function formatDate() {
 
 export async function getPlans(filter) {
     try {
-        await client.connect();
         const result = await client.db('companies').collection("companies").find(filter).toArray();
         return result[0]['company']['plans'];
     } catch (e) {
@@ -26,7 +25,6 @@ export async function getPlans(filter) {
 
 export async function pushPlan(filter, plans, options) {
     try {
-        await client.connect();
         let today = formatDate();
         const result = await client.db('companies').collection("companies").updateOne(filter, { $push: {"company.plans": {'date': today, 'content': plans} } }, options);
     } catch (e) {
@@ -36,7 +34,6 @@ export async function pushPlan(filter, plans, options) {
 
 export async function updatePlan(filter, updateDoc, options) {
     try {
-        await client.connect();
         const result = await client.db("companies").collection("companies").updateOne(filter, updateDoc, options);
     } catch (e) {
         console.error(e);
