@@ -6,7 +6,7 @@ const app = new Realm.App({ id: 'application-0-qitnr' });
 // Create an anonymous credential
 const credentials = Realm.Credentials.anonymous();
 // Authenticate the user
-const user = await app.logIn(credentials);
+const user = app.logIn(credentials);
 // `App.currentUser` updates to match the logged in user
 console.assert(user.id === app.currentUser.id);
 export const client = app.currentUser.mongoClient("mongodb-atlas");
