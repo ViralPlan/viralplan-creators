@@ -1,0 +1,34 @@
+@import './base.css';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+#app {
+  max-width: 100%;
+  margin: 0 0;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+h1 {
+  color: white;
+  font-size: xx-large;
+}
+
+p {
+  margin-top: 6px;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #ff004d;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: #00f0fc;
+  }
+}
