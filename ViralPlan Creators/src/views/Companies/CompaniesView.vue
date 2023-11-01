@@ -6,32 +6,30 @@
 
   const companyStore = companySelectedStore()
   const companiesStore = companiesArrayStore()
-  
-  let companyNames = []
-  companiesStore.companiesArray.forEach(company => {
-    companyNames.push(company['company']['name'])
-  })
-  console.log(companyNames)
 </script>
 
 <template>
   <div class="companies">
-    <h1><strong>Compañías {{ companySelected }}</strong></h1>
+    <h1><strong>Compañías</strong></h1>
     <p>Este es el manejador de compañías. Desde aquí, podrás darlas de alta o de baja,
       y editar los datos de alguna si estos cambian. Ante cualquier duda o error, consultar
       al administrador.
     </p>
+    <br>
 
-    <CDropdown class="bg-pink-600">
-      <CDropdownToggle>Selecciona una compañía</CDropdownToggle>
-      <CDropdownMenu>
-        <CDropdownItem href="#" v-for="name in companyNames">{{ name }}</CDropdownItem>
+    <CDropdown class="bg-pink-600 w-full">
+      <CDropdownToggle v-if="companyStore.companySelectedObject['company']['name'] == ''" class="text-white">Selecciona una compañía</CDropdownToggle>
+      <CDropdownToggle v-else class="text-white">{{ companyStore.companySelectedObject['company']['name'] }}</CDropdownToggle>
+      <CDropdownMenu class="w-full">
+        <CDropdownItem href="#" v-on:click="() => {
+          companyStore.companySelected = companyObject['company']['name'];
+          console.log(companyObject)
+          companyStore.companySelectedObject._id = companyObject._id;
+          companyStore.companySelectedObject.company = companyObject.company;
+        }" v-for="companyObject in companiesStore.companiesArray">{{ companyObject['company']['name'] }}</CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
-
-    
-    
-
+    <p class="text-red-500" v-if="companyStore.companyWarning == true">Por favor, selecciona una compañía</p>
   </div>
 </template>
 

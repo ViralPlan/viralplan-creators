@@ -3,10 +3,10 @@ import OpenAI from 'openai';
 
 export async function generateVideo(idea, company) {
     const openai = new OpenAI({
-        apiKey: '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',
+        apiKey: import.meta.env.VITE_OPENAI_KEY,
         dangerouslyAllowBrowser: true,
     });
-
+    console.log(idea)
     let function_name = 'create_video'
     const buenas_ideas = `Te proporcionaré ejemplos de vídeos que han sido exitosos para que te sirvan de inspiración: VÍDEO 1
     Escena 1:
@@ -105,7 +105,7 @@ export async function generateVideo(idea, company) {
         messages: [
             {'role': 'system', 'content': 'Eres un experto creador de contenido con especialización en marketing digital viral. Representamos una agencia que crea contenido humorístico para TikTok con el objetivo de aumentar la exposición y ventas de nuestros clientes. Te proporcionaré información en varios mensajes. Por favor, retén la información y espera mis instrucciones. Cuando estés listo para actuar, te indicaré con la palabra clave "GENERA".'},
             {'role': 'assistant', 'content': 'Entendido, estoy aquí para ayudarte con tus necesidades de creación de contenido y marketing digital viral. Esperaré tu información y tus instrucciones. Estoy listo para empezar cuando tú lo estés.'},
-            {'role': 'user', 'content': 'A continuación, te proporciono detalles específicos de una empresa cliente: ' + company['form']},
+            {'role': 'user', 'content': 'A continuación, te proporciono detalles específicos de una empresa cliente: ' + company},
             {'role': 'assistant', 'content': 'Toda la información está retenida, estoy listo para recibir tus instrucciones adicionales y proceder cuando indiques con la palabra clave "GENERA".'},
             {'role': 'user', 'content': `Con la información proporcionada, GENERA el guión de el siguiente video de Tiktok para (nombre de la empresa) que cumplan con las siguientes características: 
             ●El video debe de tratar sobre: ` + idea + `
@@ -140,6 +140,18 @@ export async function generateVideo(idea, company) {
         'guion': planos + '\n' + 'Instrucciones de acting: ' + '\n' + acting,
         'audio': '',
     }
-
+    console.log(video)
+/*     let video = {
+        'titulo': 'titulo',
+        'duracion': '20 segundos',
+        'personas': '2 personas',
+        'horario': '16:00',
+        'lugares': 'las oficinas',
+        'descripcion': 'asdfasd;lfjhasdpfjndalskjfnalsdjfnasjdkfm',
+        'extra': 'pasdjfnpsoa;dikflmpaosi;dfjkmpaso;diflmpa;sodilfkmpa;sl',
+        'texto': 'asdlfkjnasdolkfjnoasdlfkjnaosdilfkjanoaslkdjfn oldksm lksa.d,jfnmlaksdj,fnmalskdjfnmalskdjfnmalsdkjfnmasldkjfnmaslkd.fj,nmaslkd.fjnm aoslkdjf,na sldkj.fnm asldk.jfn salkdjf ',
+        'guion': 'aosidufhaoisdufjnaoidslufjnoasdiulfnaoseifldjnaodlfkjndoasilkjnfosaildkfjnaolSKfjdnoasldkfjndsdoalkfn',
+        'audio': ';landsfjaknsdfolkajsdflkjasdnflkjasdnmf',
+    } */
     return video
 }

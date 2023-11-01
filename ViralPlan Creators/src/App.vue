@@ -1,19 +1,69 @@
 <script setup>
   import Sidebar from './components/App/Sidebar.vue'
   import { useRoute } from 'vue-router'
+  import router from './router/index.js';
   import { storeToRefs } from 'pinia';
   import { companySelectedStore } from './stores/company.js';
   import { companiesArrayStore } from './stores/companies.js'
-import { resolveComponent } from 'vue';
+  import { authStore } from './stores/auth';
+  import { resolveComponent, watch, ref } from 'vue';
+  import { updateCompany } from '@/utils/db/companyModel.js';
+  import { processInput } from '@/utils/plans/processInput.js'
 
-  const companySelected = companySelectedStore()
-  const companiesStore = companiesArrayStore()
-  let companies = []
-  companiesStore.companiesArrayPromise.then((result) =>
-    result.forEach(company => {
-      companiesStore.companiesArray.push(company)
+
+  const auth = authStore()
+  const companyStore = companySelectedStore()
+
+  watch(() => auth.auth, () => {
+    if (auth.auth) {
+      const companiesStore = companiesArrayStore()
+    
+      companiesStore.companiesArrayPromise.then((result) => {
+        result.forEach(company => {
+          companiesStore.companiesArray.push(company)
+        })
+      })
+    }
+  })
+
+  if (auth.auth) {
+    const companiesStore = companiesArrayStore()
+  
+    companiesStore.companiesArrayPromise.then((result) => {
+      result.forEach(company => {
+        companiesStore.companiesArray.push(company)
+      })
     })
-  )
+  }
+
+  function resetValues() {
+    const companiesStore = companiesArrayStore()
+    companyStore.$reset()
+    companiesStore.$reset()
+  }
+  function cancelPlans() {
+    resetValues()
+    router.push({name: 'home'})
+  }
+  function cancelCompanies() {
+    resetValues()
+    router.push({name: 'companies'})
+  }
+  function save() {
+    const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
+    const options = { upsert: true };
+    if (companyStore.planSelectedObject.date != '') {
+      companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
+    }
+    // Specify the update to set a value for the plot field
+    const updateDoc = {
+      $set: {
+        company: companyStore.companySelectedObject.company
+      },
+    };
+    console.log('hola')
+    updateCompany(filter, updateDoc, options)
+  }
 </script>
 
 <template id="main">
@@ -24,39 +74,104 @@ import { resolveComponent } from 'vue';
     <div class="col-span-2">
       <router-view />
     </div>
-    <div class="col-span-1">
+    <div class="col-span-1 p-8">
       <template id="companies" v-if="useRoute().name === 'companies'" class="text-center">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Compañía</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Compañía</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Compañía</button>
+        <button v-on:click="this.$router.push('/companies/creator')" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Compañía</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            this.$router.push('/companies/editor')
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Compañía</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            this.$router.push('/companies/eraser')
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Compañía</button>
       </template>
       <template id="companies-editor" v-else-if="useRoute().name === 'companies-editor'">
         <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
+        <button v-on:click="() => {
+          save();
+          cancelCompanies();
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
       </template>
       <template id="companies-creator" v-else-if="useRoute().name === 'companies-creator'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
+        <button v-on:click="() => {
+          save();
+          cancelCompanies();
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
+        <button v-on:click="cancelCompanies()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
       </template>
       <template id="companies-eraser" v-else-if="useRoute().name === 'companies-eraser'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar</button>
+        <button v-on:click="cancelCompanies()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar</button>
       </template>
       <template id="plans" v-else-if="useRoute().name === 'plans'" class="text-center">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Plan</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Plan</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Descargar Plan</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Plan</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            companyStore.planWarning = false;
+            this.$router.push('/plans/creator')
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Plan</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else if (companyStore.planSelected == '') {
+            companyStore.planWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            companyStore.planWarning = false;
+            
+            this.$router.push('/plans/editor')
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Plan</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else if (companyStore.planSelected == '') {
+            companyStore.planWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            companyStore.planWarning = false;
+            processInput(companyStore.companySelected, companyStore.planSelectedObject)
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Descargar Plan</button>
+        <button v-on:click="() => {
+          if (companyStore.companySelected == '') {
+            companyStore.companyWarning = true;
+          } else if (companyStore.planSelected == '') {
+            companyStore.planWarning = true;
+          } else {
+            companyStore.companyWarning = false;
+            companyStore.planWarning = false;
+            this.$router.push('/plans/eraser')
+          }
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Plan</button>
       </template>
       <template id="plans-editor" v-else-if="useRoute().name === 'plans-editor'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
+        <button v-on:click="() => {
+          save()
+          cancelPlans()
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
+        <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
       </template>
       <template id="plans-creator" v-else-if="useRoute().name === 'plans-creator'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
+        <button v-on:click="() => {
+          save()
+          cancelPlans()
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
+        <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
       </template>
       <template id="plans-eraser" v-else-if="useRoute().name === 'plans-eraser'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar</button>
+        <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar</button>
       </template>
       <template v-else>
 

@@ -1,8 +1,12 @@
-import { PDFDocument, PDFForm, StandardFonts, PDFFont } from 'pdf-lib'
-import { getCompany } from '../db/companyModel.js'
-import { plan_5 } from './plan_5.js'
-import { plan_20 } from './plan_20.js';
-
+import { plan_5 } from '@/utils/plans/plan_5.js'
+import { plan_20 } from '@/utils/plans/plan_20.js';
+import fs from 'fs'
+import * as process from 'process'
+import { toBase64 } from 'js-base64';
+import path from 'path'
+import { PDFDocument, encodeToBase64 } from 'pdf-lib'
+import fontkit from '@pdf-lib/fontkit'
+import { fontBytes } from '@/utils/plans/font.js'
 
 function saveByteArray(byteArray) {
   var blob = new Blob([byteArray], {type: "application/pdf"});
@@ -15,37 +19,20 @@ function saveByteArray(byteArray) {
 
 
 
-export async function processInput(companySelected, planSelected) {
-  let company = {
-    'name': '',
-    'tel': '',
-    'email': '',
-    'form': '',
-    'plans': []
-  }
-  let plan = []
-  let companySelectedObject = await getCompany(companySelected);
-  company['plans'] = companySelectedObject[0]['company']['plans'];
-
-  for (let i = 0; i < company['plans'].length; i++) {
-      if (company['plans'][i]['date'] == planSelected) {
-          plan = company['plans'][i];
-      }
-  }
-
-  const PDFLib = require('pdf-lib')
-  const fs = require('fs')
-  const fontkit = require('@pdf-lib/fontkit')
+export async function processInput(companySelected, plan) {
+  // const PDFLib = require('pdf-lib')
+  // const fs = require('fs')
+  // const fontkit = require('@pdf-lib/fontkit')
   let text = '';
   if (plan.content.length == 5) {
     text = plan_5
   } else {
     text = plan_20
   }
-  const pdfDoc = await PDFLib.PDFDocument.load(text)
-
+  const pdfDoc = await PDFDocument.load(text)
   pdfDoc.registerFontkit(fontkit)
-  const fontBytes = fs.readFileSync("C:\\Users\\pmpls\\Desktop\\platform\\src\\src\\assets\\fonts\\Comfortaa\\Comfortaa.ttf");
+  // const fontBytes = toBase64(font)
+  //const fontBytes = fs.readFileSync("/src/assets/fonts/Comfortaa/Comfortaa.ttf");
   const customFont = await pdfDoc.embedFont(fontBytes);
   const form = pdfDoc.getForm()
   let videoNumber = 1

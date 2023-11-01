@@ -2,15 +2,19 @@ import './assets/main.css'
 import '@coreui/coreui/dist/css/coreui.min.css'
 
 
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
 import { createPinia } from 'pinia'
+import { authStore } from './stores/auth'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
-
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 app.use(router)
+
 
 app.mount('#app')

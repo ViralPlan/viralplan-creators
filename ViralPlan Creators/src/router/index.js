@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authStore } from '@/stores/auth.js'
 import HomeView from '../views/HomeView.vue'
 import CompaniesView from '../views/Companies/CompaniesView.vue'
 import CompaniesEditorView from '../views/Companies/CompaniesEditorView.vue'
@@ -8,10 +9,16 @@ import PlansView from '../views/Plans/PlansView.vue'
 import PlansEditorView from '../views/Plans/PlansEditorView.vue'
 import PlansCreatorView from '../views/Plans/PlansCreatorView.vue'
 import PlansEraserView from '../views/Plans/PlansEraserView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
     {
       path: '/',
       name: 'home',
@@ -21,47 +28,54 @@ const router = createRouter({
       path: '/companies',
       name: 'companies',
       component: CompaniesView,
-      children: [
-        {
-          path: '/editor',
-          name: 'companies-editor',
-          component: CompaniesEditorView
-        },
-        {
-          path: '/creator',
-          name: 'companies-creator',
-          component: CompaniesCreatorView
-        },
-        {
-          path: '/eraser',
-          name: 'companies-eraser',
-          component: CompaniesEraserView
-        }
-      ]
+    },
+    {
+      path: '/companies/editor',
+      name: 'companies-editor',
+      component: CompaniesEditorView
+    },
+    {
+      path: '/companies/creator',
+      name: 'companies-creator',
+      component: CompaniesCreatorView
+    },
+    {
+      path: '/companies/eraser',
+      name: 'companies-eraser',
+      component: CompaniesEraserView
     },
     {
       path: '/plans',
       name: 'plans',
       component: PlansView,
-      children: [
-        {
-          path: '/editor',
-          name: 'plans-editor',
-          component: PlansEditorView
-        },
-        {
-          path: '/creator',
-          name: 'plans-creator',
-          component: PlansCreatorView
-        },
-        {
-          path: '/eraser',
-          name: 'plans-eraser',
-          component: PlansEraserView
-        }
-      ]
+    },
+    {
+      path: '/plans/editor',
+      name: 'plans-editor',
+      component: PlansEditorView
+    },
+    {
+      path: '/plans/creator',
+      name: 'plans-creator',
+      component: PlansCreatorView
+    },
+    {
+      path: '/plans/eraser',
+      name: 'plans-eraser',
+      component: PlansEraserView
     }
   ]
+})
+
+router.beforeEach(async (to) => {
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const auth = authStore();
+
+  if (authRequired && !auth.auth) {
+    auth.returnUrl = to.fullPath;
+    return '/login';
+  }
 })
 
 export default router

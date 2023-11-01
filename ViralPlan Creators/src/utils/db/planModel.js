@@ -1,6 +1,6 @@
-import { client } from './db.js';
 
-function formatDate() {
+
+export function formatDate() {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),

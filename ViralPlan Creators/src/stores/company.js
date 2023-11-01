@@ -4,8 +4,24 @@ import { defineStore } from 'pinia'
 export const companySelectedStore = defineStore('company', {
   state: () => {
     return {
+      companyWarning: false,
+      planWarning: false,
       companySelected: '',
-      companySelectedObject: {}
+      planSelected: '',
+      companySelectedObject: {
+        _id: {},
+        company: {
+          name: '',
+          email: '',
+          tel: '',
+          form: '',
+          plans: []
+        }
+      },
+      planSelectedObject: {
+        date: '',
+        content: []
+      }
     }
   }
 })
