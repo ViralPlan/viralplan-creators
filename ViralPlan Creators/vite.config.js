@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vitePluginRequire from "vite-plugin-require";
+// import vitePluginRequire from "vite-plugin-require";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    vitePluginRequire(),
+    // vitePluginRequire(),
     nodePolyfills({
       // To add only specific polyfills, add them here. If no option is passed, adds all polyfills
       // To exclude specific polyfills, add them to this list. Note: if include is provided, this has no effect
