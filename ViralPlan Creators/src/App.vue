@@ -6,9 +6,8 @@
   import { companiesArrayStore } from './stores/companies.js'
   import { authStore } from './stores/auth';
   import { watch } from 'vue';
-  import { updateCompany } from '@/utils/db/companyModel.js';
   import { processInput } from '@/utils/plans/processInput.js';
-  import { save, resetValues, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
+  import { save, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
 
 
   const auth = authStore()
@@ -86,7 +85,7 @@
     <div class="col-span-1 min-h-screen w-4/5">
       <Sidebar v-if="useRoute().name != 'login'"/>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-2 mt-8">
       <router-view />
     </div>
     <div class="col-span-1 p-8">

@@ -17,7 +17,7 @@
 
 <template>
   <div class="companies">
-    <h1><strong>Planes</strong></h1>
+    <h1 class="text-3xl"><strong>Planes</strong></h1>
     <p>Este es el manejador de planes. Desde aquí, podrás crear planes asociados a cada compañía
         y utilizar el poder de GPT-4 para crear los planes de contenido de las empresas.
     </p>
