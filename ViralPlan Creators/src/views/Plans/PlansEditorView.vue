@@ -35,9 +35,13 @@ import { ref } from 'vue';
 import { companySelectedStore } from '../../stores/company';
 import VideoView from '../../components/VideoView.vue';
 
-let videoQ = ref(0) // Number of videos to create
-let videoQArray = ref([])
 const companyStore = companySelectedStore()
+let videoQ = ref(companyStore.planSelectedObject.content.length) // Number of videos to create
+let arr = []
+for (let index = 0; index < companyStore.planSelectedObject.content.length; index++) {
+    arr.push(index)
+}
+let videoQArray = ref(arr)
 
 const currentPage = ref(1)
 </script>

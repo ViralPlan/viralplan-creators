@@ -23,7 +23,7 @@
     </p>
     <br>
 
-    <CDropdown class="bg-pink-600 w-full">
+    <CDropdown class="bg-pink-600 w-full mb-4">
       <CDropdownToggle v-if="companyStore.companySelected == ''" class="text-white">Selecciona una compañía</CDropdownToggle>
       <CDropdownToggle v-else class="text-white">{{ companyStore.companySelected }}</CDropdownToggle>
       <CDropdownMenu class="w-full">

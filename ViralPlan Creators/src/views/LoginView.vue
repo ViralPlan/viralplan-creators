@@ -1,4 +1,5 @@
 <template class="h-screen py-auto">
+    <h1 class="mb-8 mt-12 text-6xl"><strong>ViralPlan Login</strong></h1>
     <fwb-input v-model="email" v-on:change="emailPasswordWarning=false" label="Correo Electrónico" placeholder="Tu correo electrónico" size="md" />
     <fwb-input v-model="password" v-on:change="emailPasswordWarning=false" label="Contraseña" placeholder="Tu contraseña" size="md" />
     <p class="text-red-500" v-if="warning">Correo electrónico o contraseña incorrectos</p>
@@ -61,5 +62,10 @@
             return false;
         }
     }
-
 </script>
+
+<style>
+label {
+    color: white !important;
+}
+</style>

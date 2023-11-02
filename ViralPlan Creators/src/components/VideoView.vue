@@ -45,25 +45,23 @@
 </template>
 
 <script setup>
-    import { ref, watch } from 'vue';
+    const props = defineProps({
+        videoIndex: Number
+    })
+    import { ref } from 'vue';
     import { generateVideo } from '@/utils/plans/promptGPT.js'
     import { companySelectedStore } from '../stores/company.js';
 
     const companyStore = companySelectedStore()
-    let loading = ref(true);
     const idea = ref('')
-    let ideaOrVideo = ref(() => {
-        if (companyStore.planSelectedObject.content[videoIndex] == '') {
-            return true;
-        } else {
-            return false;
-        }
-    })
-    defineProps({
-        videoIndex: Number
-    })
-
-    
+    let loading = ref(false);
+    let ideaOr = true;
+    if (companyStore.planSelectedObject.content[props.videoIndex] == '') {
+        ideaOr = ref(true)
+    } else {
+        ideaOr = ref(false)
+    }
+    let ideaOrVideo = ideaOr
 </script>
 
 <style>

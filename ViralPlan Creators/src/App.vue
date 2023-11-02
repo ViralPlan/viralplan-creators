@@ -2,13 +2,13 @@
   import Sidebar from './components/App/Sidebar.vue'
   import { useRoute } from 'vue-router'
   import router from './router/index.js';
-  import { storeToRefs } from 'pinia';
   import { companySelectedStore } from './stores/company.js';
   import { companiesArrayStore } from './stores/companies.js'
   import { authStore } from './stores/auth';
-  import { resolveComponent, watch, ref } from 'vue';
+  import { watch } from 'vue';
   import { updateCompany } from '@/utils/db/companyModel.js';
-  import { processInput } from '@/utils/plans/processInput.js'
+  import { processInput } from '@/utils/plans/processInput.js';
+  import { save, resetValues, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
 
 
   const auth = authStore()
@@ -36,10 +36,15 @@
     })
   }
 
-  function resetValues() {
+/*   function resetValues() {
     const companiesStore = companiesArrayStore()
     companyStore.$reset()
     companiesStore.$reset()
+    companiesStore.companiesArrayPromise.then((result) => {
+      result.forEach(company => {
+        companiesStore.companiesArray.push(company)
+      })
+    }) 
   }
   function cancelPlans() {
     resetValues()
@@ -47,13 +52,24 @@
   }
   function cancelCompanies() {
     resetValues()
-    router.push({name: 'companies'})
+    router.push({name: 'home'})
   }
   function save() {
     const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
     const options = { upsert: true };
     if (companyStore.planSelectedObject.date != '') {
-      companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
+      let up = false;
+      for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
+        if (companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) {
+          companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
+          up = true;
+        }
+      }
+      if (!up) {
+        companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
+      }
+
+      // companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
     }
     // Specify the update to set a value for the plot field
     const updateDoc = {
@@ -61,15 +77,14 @@
         company: companyStore.companySelectedObject.company
       },
     };
-    console.log('hola')
     updateCompany(filter, updateDoc, options)
-  }
+  } */
 </script>
 
 <template id="main">
   <div class="grid grid-cols-4">
     <div class="col-span-1 min-h-screen w-4/5">
-      <Sidebar />
+      <Sidebar v-if="useRoute().name != 'login'"/>
     </div>
     <div class="col-span-2">
       <router-view />
@@ -95,9 +110,11 @@
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Compañía</button>
       </template>
       <template id="companies-editor" v-else-if="useRoute().name === 'companies-editor'">
-        <button type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
-        <button v-on:click="() => {
+        <button v-on:click="{
           save();
+          cancelCompanies();
+        }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
+        <button v-on:click="() => {
           cancelCompanies();
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
       </template>
@@ -129,7 +146,7 @@
           } else {
             companyStore.companyWarning = false;
             companyStore.planWarning = false;
-            
+
             this.$router.push('/plans/editor')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Plan</button>
@@ -172,9 +189,6 @@
       </template>
       <template id="plans-eraser" v-else-if="useRoute().name === 'plans-eraser'">
         <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar</button>
-      </template>
-      <template v-else>
-
       </template>
     </div>
   </div>
