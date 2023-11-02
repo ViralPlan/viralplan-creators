@@ -91,13 +91,13 @@
     </div>
     <div class="col-span-1 p-8">
       <template id="companies" v-if="useRoute().name === 'companies'" class="text-center">
-        <button v-on:click="this.$router.push('/companies/creator')" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Compañía</button>
+        <button v-on:click="router.push('/companies/creator')" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Compañía</button>
         <button v-on:click="() => {
           if (companyStore.companySelected == '') {
             companyStore.companyWarning = true;
           } else {
             companyStore.companyWarning = false;
-            this.$router.push('/companies/editor')
+            router.push('/companies/editor')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Compañía</button>
         <button v-on:click="() => {
@@ -105,7 +105,7 @@
             companyStore.companyWarning = true;
           } else {
             companyStore.companyWarning = false;
-            this.$router.push('/companies/eraser')
+            router.push('/companies/eraser')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Compañía</button>
       </template>
@@ -135,7 +135,7 @@
           } else {
             companyStore.companyWarning = false;
             companyStore.planWarning = false;
-            this.$router.push('/plans/creator')
+            router.push('/plans/creator')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Crear Plan</button>
         <button v-on:click="() => {
@@ -147,7 +147,7 @@
             companyStore.companyWarning = false;
             companyStore.planWarning = false;
 
-            this.$router.push('/plans/editor')
+            router.push('/plans/editor')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Editar Plan</button>
         <button v-on:click="() => {
@@ -169,7 +169,7 @@
           } else {
             companyStore.companyWarning = false;
             companyStore.planWarning = false;
-            this.$router.push('/plans/eraser')
+            router.push('/plans/eraser')
           }
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Eliminar Plan</button>
       </template>
