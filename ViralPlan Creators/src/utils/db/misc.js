@@ -24,19 +24,20 @@ export function cancelCompanies() {
   resetValues()
   router.push({name: 'home'})
 }
-export function save() {
+export function save(deleting = false) {
   const companyStore = companySelectedStore()
   const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
   const options = { upsert: true };
+  console.log(companyStore.companySelectedObject.company)
   if (companyStore.planSelectedObject.date != '') {
     let up = false;
     for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
-      if (companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) {
+      if ((companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) && (!deleting)) {
         companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
         up = true;
       }
     }
-    if (!up) {
+    if (!up && !deleting) {
       companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
     }
 
