@@ -23,43 +23,9 @@
     async function authenticate() {
         if (email == '' || password == '') {
             emailPasswordWarning = true;
-            auth.auth = false;
+            auth.user = null;
         } else {
-            auth.auth = await log(email.value, password.value);
-            if (auth.auth) {
-                warning = false;
-                emailPasswordWarning = false;
-                router.push('/');
-            } else {
-                warning = true;
-            }
-        }
-    }
-
-    async function log(email, password) {
-        try {
-            const {
-                BSON: { ObjectId },
-            } = Realm;
-            const app = new Realm.App({ id: 'application-0-qitnr' });
-            // Create an anonymous credential
-            const credentials = Realm.Credentials.emailPassword(email, password);
-            // Authenticate the user
-            const user = await app.logIn(credentials)
-
-            if (user.id === app.currentUser.id) {
-                auth.email = email;
-                auth.password = password;
-                auth.client = app;
-                return true;
-
-            } else {
-                warning = true;
-                return false;
-            }
-        } catch (error) {
-            warning = true;
-            return false;
+            await auth.login(email.value, password.value);
         }
     }
 </script>

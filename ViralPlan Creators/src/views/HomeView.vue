@@ -1,5 +1,16 @@
 <script setup>
+  import { companiesArrayStore } from '../stores/companies';
+  import { onMounted } from 'vue';
 
+  const companiesStore = companiesArrayStore();
+  onMounted(() => {
+    companiesStore.$reset();
+    companiesStore.companiesArrayPromise.then((result) => {
+      result.forEach(company => {
+        companiesStore.companiesArray.push(company)
+      })
+    }) 
+  });
 </script>
 
 <template>

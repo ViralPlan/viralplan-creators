@@ -2,7 +2,7 @@
     <div>
         <div class="grid grid-cols-2">
             <div class="col-span-1 w-full float-left">
-                <h1><strong>Video {{ currentPage }}</strong></h1>
+                <h1><strong>{{ companyStore.companySelected }} - Video {{ currentPage }}</strong></h1>
             </div>
             <div class="col-span-1 flex justify-end">
                 <a @:click="() => {

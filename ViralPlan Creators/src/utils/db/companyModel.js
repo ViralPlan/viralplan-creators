@@ -12,7 +12,7 @@ export async function getCompanies() {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.email, auth.password);
+        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
@@ -30,7 +30,7 @@ export async function getCompany(name) {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.email, auth.password);
+        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
@@ -65,7 +65,7 @@ export async function updateCompany(filter, updateDoc, options) {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.email, auth.password);
+        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
@@ -82,9 +82,9 @@ export async function deleteCompany(filter) {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.email, auth.password);
+        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
         const user = await app.logIn(credentials)
-        console.assert(user.id === app.currentUser.id);
+        console.assert(auth.user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
         const result = await client.db("companies").collection("companies").deleteOne(filter);
     } catch (e) {
