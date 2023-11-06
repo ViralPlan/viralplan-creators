@@ -25,7 +25,7 @@
     }
   })
 
-  if (auth.auth) {
+  if (auth.user) {
     const companiesStore = companiesArrayStore()
   
     companiesStore.companiesArrayPromise.then((result) => {

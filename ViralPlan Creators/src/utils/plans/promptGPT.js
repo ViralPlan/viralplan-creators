@@ -55,10 +55,6 @@ export async function generateVideo(idea, company) {
                 "type": "number",
                 'description': 'Numero de personas que aparecen en el video',
             },
-            'horario': {
-                "type": "string",
-                'description': 'Horario de subida del video',
-            },
             'lugares': {
                 "type": "string",
                 'description': 'Lugares donde se graba el video',
