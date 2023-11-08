@@ -2,7 +2,7 @@
     <div v-if="videoQ == 0">
         <h1 class="mb-8">Elige el número de videos que tendrá el plan</h1>
         <div class="w-full grid grid-cols-2">
-            <button class="col-span-1 mr-8 text-white bg-pink-600 w-full rounded-lg" style="height: 10vh;" @:click="() => {
+            <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="() => {
                 videoQArray = [0, 1, 2, 3, 4];
                 companyStore.planSelectedObject = {
                     date: formatDate(),
@@ -10,7 +10,7 @@
                 }
                 videoQ = 5;
             }"><strong>Cinco vídeos</strong></button>
-            <button class="col-span-1 mr-8 text-white bg-pink-600 w-full rounded-lg" style="height: 10vh;" @:click="() => {
+            <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="() => {
                 videoQArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
                 companyStore.planSelectedObject = {
                     date: formatDate(),

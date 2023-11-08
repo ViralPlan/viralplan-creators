@@ -27,6 +27,7 @@
 
   if (auth.user) {
     const companiesStore = companiesArrayStore()
+    companiesStore.$reset()
   
     companiesStore.companiesArrayPromise.then((result) => {
       result.forEach(company => {

@@ -2,16 +2,16 @@
     <template v-if="ideaOrVideo">
         <label for="idea" class="block my-6 text-2xl font-bold text-white dark:text-white">Idea del video {{ videoIndex + 1 }}</label>
         <textarea id="idea" v-model="idea" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="En el video aparecen..."></textarea>
-        <button class="bg-pink-500 text-white rounded-lg w-full my-8" v-on:click="async () => {
+        <button class="bg-pink-600 text-white rounded-lg w-full my-8" v-on:click="async () => {
             ideaOrVideo = false;
             loading = true;
             companyStore.planSelectedObject.content[videoIndex] = await generateVideo(idea, companyStore.companySelectedObject.company.form);
             loading = false;
-        }" style="height: 10vh;"><strong>Generar video</strong></button>
+        }" style="height: 5vh;"><strong>Generar video</strong></button>
     </template>
     <template v-if="!ideaOrVideo">
         <template v-if="loading" class="mx-auto mt-8">
-            <div class="orbit-spinner">
+            <div class="orbit-spinner mx-auto mt-8 w-1/3">
                 <div class="orbit"></div>
                 <div class="orbit"></div>
                 <div class="orbit"></div>
