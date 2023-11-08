@@ -7,38 +7,6 @@ export async function generateVideo(idea, company) {
         dangerouslyAllowBrowser: true,
     });
     console.log(idea)
-    let function_name = 'create_video'
-    const buenas_ideas = `Te proporcionaré ejemplos de vídeos que han sido exitosos para que te sirvan de inspiración: VÍDEO 1
-    Escena 1:
-    Entrada de la oficina: La cámara entra en la oficina y muestra un rótulo de
-    "Quokka" con un miembro del equipo (Carlota) saludando con un Āesto amistoso.
-    Escena 2:
-    Oficina Āeneral: La cámara pasea rápidamente por la oficina, mostrando a
-    empleados trabajando, riendo, e interactuando.
-    Escena 3:
-    Taller de personalización: La cámara enÿoca una máquina de láser personalizando
-    una botella. Un trabajador muestra con orĀullo una botella recién personalizada.
-    Escena 4:
-    Fábrica: Rápido vistazo de las máquinas y el proceso de ÿabricación de las
-    botellas. Dos trabajadores inspeccionan una botella y la aprueban con pulĀares
-    hacia arriba.
-    Escena 5
-    Zona de descanso: Dos trabajadores disÿrutan de un caÿé con sus termos Quokka,
-    riendo y charlando. Ambos hacen un Āesto de "shhh" hacia la cámara.
-    Escena 6
-    Final : La cámara se aleja mostrando la ÿachada de la oficina con todo el equipo
-    ÿuera, despidiéndose y levantando sus botellas Quokka.
-    https://vm.tiktok.com/ZGJWTo7wN/ ÿondo
-    Te presentamos Quokka y quien hace que ÿuncione!!
-    (Explicar en voz en off cada zona)
-    Bienvenidos todos!! #parati #ÿyp
-    -
-    40 seĀ
-    Varias
-    15:00h - 16:00h
-    Todas las instalaciones
-    mencionadas en el Āuión.
-    Estos vídeos han sido exitosos porque porque humaniza mucho a la empresa y la marca de quokka con un tono joven y cercano. Por favor, retén esta información.`
 
     const schema = {
         "type": "object",
@@ -49,23 +17,23 @@ export async function generateVideo(idea, company) {
             },
             'duracion': {
                 "type": "string",
-                'description': 'Duracion del video',
+                'description': 'Duracion del video, ajustándose a lo que durará el guión escrito más abajo',
             },
             'personas': {
                 "type": "number",
-                'description': 'Numero de personas que aparecen en el video',
+                'description': 'Numero de personas que aparecen en el video, que como máximo debe ser el número de personas que aparecen en la información de la empresa',
             },
             'lugares': {
                 "type": "string",
-                'description': 'Lugares donde se graba el video',
+                'description': 'Lugares donde se graba el video, de entre los que estan disponibles en la información de la empresa',
             },
             'descripcion': {
                 "type": "string",
-                'description': 'Descripcion del video',
+                'description': 'Texto que debe ir incluido en la descripcion del video una vez subido a Tiktok',
             },
             'planos': {
                 "type": "array",
-                'description': 'Planos del video',
+                'description': ' Cadena de texto donde se define, para cada plano: tiempos de cada plano, acting de cada persona en el plano, dialogos/voz en off en cada plano, tono a transmitir en cada plano',
                 'items': { 'type': 'string' }
             },
             'texto': {
@@ -74,27 +42,27 @@ export async function generateVideo(idea, company) {
             },
             'objetivo': {
                 "type": "string",
-                'description': 'Objetivo del video',
+                'description': 'Objetivo del video, que debe ir acorde con la información dada de la empresa (vender, aumenar seguidores, etc)',
             },
             'cta': {
                 "type": "string",
-                'description': 'Call to action del video',
+                'description': 'Call to action del video, que debe ir acorde con el objetivo',
             },
             'punchline': {
                 "type": "string",
-                'description': 'Punchline del video',
+                'description': 'Punchline del video final, que puede ir incluida o no en el texto en pantalla',
             },
             'extra': {
                 "type": "string",
-                'description': 'Detalles adicionales del video',
+                'description': 'Detalles adicionales del video que puedan ser necesarios',
             },
             'instrucciones': {
                 'type': 'array',
-                'description': 'Instrucciones de acting del video, dadas para cada persona que sale en el video',
+                'description': 'Instrucciones de acting del video, dadas para cada persona que sale en el video sobre como comportarse de manera general',
                 'items': { 'type': 'string' }
             }
         },
-        'required': ['titulo', 'duracion', 'personas', 'horario', 'lugares', 'descripcion', 'planos', 'texto', 'objetivo', 'cta', 'punchline', 'extra', 'instrucciones']
+        'required': ['titulo', 'duracion', 'personas', 'horario', 'lugares', 'descripcion', 'planos', 'texto', 'objetivo', 'instrucciones']
     }
 
     const chatCompletion = await openai.chat.completions.create({
@@ -103,21 +71,19 @@ export async function generateVideo(idea, company) {
             {'role': 'assistant', 'content': 'Entendido, estoy aquí para ayudarte con tus necesidades de creación de contenido y marketing digital viral. Esperaré tu información y tus instrucciones. Estoy listo para empezar cuando tú lo estés.'},
             {'role': 'user', 'content': 'A continuación, te proporciono detalles específicos de una empresa cliente: ' + company},
             {'role': 'assistant', 'content': 'Toda la información está retenida, estoy listo para recibir tus instrucciones adicionales y proceder cuando indiques con la palabra clave "GENERA".'},
-            {'role': 'user', 'content': `Con la información proporcionada, GENERA el guión de el siguiente video de Tiktok para (nombre de la empresa) que cumplan con las siguientes características: 
-            ●El video debe de tratar sobre: ` + idea + `
-            Punchline: "Aprobado por civilizaciones avanzadas".
-            ● Formato breve: Guión del vídeo que debe incluir detalles de acting, planos y otros elementos pertinentes para enriquecer el contenido, manteniendo una longitud de entre 1800 a 900 caracteres. El texto para mostrar en pantalla tiene un límite máximo de 660 caracteres, aunque en ocasiones puede no haber texto. La descripción detallada del vídeo debe contener 47 caracteres, mientras que la duración máxima estipulada, el número de personas requeridas para el rodaje y el horario de subida deben tener cada uno 11 caracteres. Las posibles locaciones deben describirse en 88 caracteres. Por último, se debe añadir una sección extra para detalles o especificaciones adicionales, la cual tiene un límite de 51 caracteres.
-            ● Potencial viral: Deben ser llamativos, amenos, humorísticos y juveniles. 
-            ● Objetivo: Entretener más que vender, para que la marca se haga conocida. 
-            ● No deben parecer anuncios. 
-            ● Deben incitar a dar like, compartir y conectar con la audiencia de la marca. 
-            ● Pueden ser irónicos o emotivos, pero no infantiles o genéricos. 
-            ● Deben tener un punchline o sorpresa para retener al espectador
-            ● Estamos buscando ideas frescas y actuales, que se alejen de los típicos clichés publicitarios y corporativos para captar genuinamente la atención del público general. El objetivo es crear contenido que enganche desde el primer momento, incentivando a los espectadores a quedarse hasta el final del vídeo y que les motive a interactuar con este. Para lograrlo, es fundamental que las ideas sean ingeniosas, divertidas, y hasta un poco arriesgadas, evitando caer en la infantilización. Queremos que los textos sean cotidianos y graciosos, con un enfoque que resuene especialmente con el público joven.`},
+            {'role': 'user', 'content': `Con la información proporcionada, GENERA el guión de el siguiente video de Tiktok para la empresa que trate sobre la siguiente idea: ` + idea}, 
         ],
-        model: 'gpt-4-0613',
-        functions:[{'name': function_name, 'parameters': schema}],
-        function_call:{'name': function_name},
+        model: 'gpt-4-1106-preview',
+        functions:[
+            {
+                    "name": "writeVideo",
+                    "description": "Escribe un video de TikTok a partir de una idea",
+                    "parameters": schema
+            }
+        ],
+        function_call: {
+            "name": "writeVideo"
+        },
     })
 
     let result = JSON.parse(chatCompletion.choices[0].message.function_call.arguments)
@@ -128,13 +94,22 @@ export async function generateVideo(idea, company) {
         'titulo': result.titulo,
         'duracion': result.duracion,
         'personas': result.personas,
-        'horario': result.horario,
+        'horario': "15:00h-16:00h",
         'lugares': result.lugares,
         'descripcion': result.descripcion,
-        'extra': result.extra,
-        'texto': result.texto + '\n' + 'Objetivo: ' + result.objetivo + '\n' + 'Call to action: ' + result.cta + '\n' + 'Punchline: ' + result.punchline,
+        'extra': '-',
+        'texto': result.texto + '\n' + 'Objetivo: ' + result.objetivo,
         'guion': planos + '\n' + 'Instrucciones de acting: ' + '\n' + acting,
         'audio': '',
+    }
+    if (result.extra) {
+        video['extra'] = result.extra
+    }
+    if (result.punchline) {
+        video['texto'] += '\n' + 'Punchline: ' + result.punchline
+    }
+    if (result.cta) {
+        video['texto'] += '\n' + 'CTA: ' + result.cta
     }
     console.log(video)
 /*     let video = {
