@@ -16,6 +16,7 @@
   watch(() => auth.auth, () => {
     if (auth.auth) {
       const companiesStore = companiesArrayStore()
+      companiesStore.$reset()
     
       companiesStore.companiesArrayPromise.then((result) => {
         result.forEach(company => {

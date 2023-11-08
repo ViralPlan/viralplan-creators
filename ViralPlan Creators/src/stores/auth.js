@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { companiesArrayStore } from '@/stores/companies.js'
 import * as Realm from "realm-web";
 import router from '@/router'
 
@@ -22,6 +23,15 @@ export const authStore = defineStore({
           if (user.id === app.currentUser.id) {
             user = {'email': username, 'password': password}
             this.user = user
+
+            const companiesStore = companiesArrayStore()
+            companiesStore.$reset()
+          
+            companiesStore.companiesArrayPromise.then((result) => {
+              result.forEach(company => {
+                companiesStore.companiesArray.push(company)
+              })
+            })
           }
         } catch (error) {
           console.error("Failed to log in", error);

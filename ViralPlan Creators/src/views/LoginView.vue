@@ -13,6 +13,7 @@
     import { authStore } from '@/stores/auth.js'
     import { FwbInput } from 'flowbite-vue'
     import * as Realm from "realm-web";
+
     const auth = authStore()
     const email = ref('')
     const password = ref('')
