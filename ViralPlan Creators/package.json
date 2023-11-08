@@ -4,16 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "move-static": "cp -a ./node_modules/@pdftron/pdfjs-express/public/. ./dist/public/pdfjsexpress",
+    "build": "vite build && npm run move-static",
     "preview": "vite preview"
   },
   "dependencies": {
     "@coreui/vue": "^4.10.1",
     "@pdf-lib/fontkit": "^1.1.1",
+    "@pdftron/pdfjs-express": "^8.7.4",
+    "@vueup/vue-quill": "^1.2.0",
     "abort-controller": "^3.0.0",
     "flowbite": "^1.8.1",
     "flowbite-vue": "^0.1.0",
     "fs": "^0.0.1-security",
+    "html-to-rtf": "^2.1.0",
     "js-base64": "^3.7.5",
     "memfs": "^4.6.0",
     "mongodb": "^6.2.0",

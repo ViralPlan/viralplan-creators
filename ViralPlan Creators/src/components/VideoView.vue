@@ -29,6 +29,7 @@
             <label for="guion" class="block my-6 text-2xl font-bold text-white dark:text-white">Guión</label>
             <textarea id="guion" rows="6" v-model="companyStore.planSelectedObject.content[videoIndex].guion" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Primer plano: ..."><pre></pre></textarea>
             <label for="texto" class="block my-6 text-2xl font-bold text-white dark:text-white">Texto en pantalla</label>
+            <!-- <QuillEditor theme="snow" class="bg-white text-black" toolbar="minimal" content-type="html" v-model:content="companyStore.planSelectedObject.content[videoIndex].texto"/> -->
             <textarea id="texto" rows="6" v-model="companyStore.planSelectedObject.content[videoIndex].texto" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="En el primer plano se escribe en pantalla..."><pre></pre></textarea>
             <label for="descripcion" class="block my-6 text-2xl font-bold text-white dark:text-white">Descripción</label>
             <input type="text" id="descripcion" v-model="companyStore.planSelectedObject.content[videoIndex].descripcion" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
@@ -47,6 +48,8 @@
     import { ref } from 'vue';
     import { generateVideo } from '@/utils/plans/promptGPT.js'
     import { companySelectedStore } from '../stores/company.js';
+    // import { QuillEditor } from '@vueup/vue-quill'
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     const companyStore = companySelectedStore()
     const idea = ref('')

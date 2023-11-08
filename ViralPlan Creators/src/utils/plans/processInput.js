@@ -7,6 +7,7 @@ import path from 'path'
 import { PDFDocument, encodeToBase64 } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
 import { fontBytes } from '@/utils/plans/font.js'
+import * as htmlToRtf from 'html-to-rtf';
 
 function saveByteArray(byteArray) {
   var blob = new Blob([byteArray], {type: "application/pdf"});
