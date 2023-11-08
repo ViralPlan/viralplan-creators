@@ -16,19 +16,19 @@ export function resetValues() {
     })
   }) 
 }
-export function cancelPlans() {
-  resetValues()
+export async function cancelPlans() {
+  await resetValues()
   router.push({name: 'home'})
 }
-export function cancelCompanies() {
-  resetValues()
+export async function cancelCompanies() {
+  await resetValues()
   router.push({name: 'home'})
 }
 export function save(deleting = false) {
   const companyStore = companySelectedStore()
   const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
   const options = { upsert: true };
-  console.log(companyStore.companySelectedObject.company)
+
   if (companyStore.planSelectedObject.date != '') {
     let up = false;
     for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
