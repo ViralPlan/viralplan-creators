@@ -67,7 +67,6 @@ export async function processInput(companySelected, plan) {
       field.setText(video.personas.toString())
 
       videoNumber++
-      console.log(videoNumber)
     } catch (error) {
       console.log(error)
       continue
@@ -77,6 +76,5 @@ export async function processInput(companySelected, plan) {
   form.updateFieldAppearances(customFont)
   form.flatten()
   const pdfBytes = await pdfDoc.save()
-  console.log(pdfBytes)
   saveByteArray(pdfBytes)
 }

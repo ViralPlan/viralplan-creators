@@ -6,7 +6,6 @@ export async function generateVideo(idea, company) {
         apiKey: import.meta.env.VITE_OPENAI_KEY,
         dangerouslyAllowBrowser: true,
     });
-    console.log(idea)
 
     const schema = {
         "type": "object",
@@ -73,7 +72,7 @@ export async function generateVideo(idea, company) {
             {'role': 'assistant', 'content': 'Toda la información está retenida, estoy listo para recibir tus instrucciones adicionales y proceder cuando indiques con la palabra clave "GENERA".'},
             {'role': 'user', 'content': `Con la información proporcionada, GENERA el guión de el siguiente video de Tiktok para la empresa que trate sobre la siguiente idea: ` + idea}, 
         ],
-        model: 'gpt-4-1106-preview',
+        model: 'gpt-4',
         functions:[
             {
                     "name": "writeVideo",
@@ -85,9 +84,11 @@ export async function generateVideo(idea, company) {
             "name": "writeVideo"
         },
     })
+    console.log(chatCompletion)
 
     let result = JSON.parse(chatCompletion.choices[0].message.function_call.arguments)
     let planos = result.planos.join('\n')
+    console.log(planos)
     let acting = result.instrucciones.join('\n')
 
     let video = {
@@ -111,7 +112,6 @@ export async function generateVideo(idea, company) {
     if (result.cta) {
         video['texto'] += '\n' + 'CTA: ' + result.cta
     }
-    console.log(video)
 /*     let video = {
         'titulo': 'titulo',
         'duracion': '20 segundos',
