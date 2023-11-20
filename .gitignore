@@ -8,8 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
 *.local
 
 # Editor directories and files
@@ -122,7 +120,7 @@ out
 # public
 
 # vuepress build output
-.vuepress/dist
+
 
 # vuepress v2.x temp and cache directory
 .temp
