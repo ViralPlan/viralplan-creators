@@ -5,7 +5,7 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 export async function generateIdeas(number, company) {
-/*     const form = new FormData();
+    const form = new FormData();
     let ideas = []
     for (let i = 0; i < number; i++) {
         ideas.push('')
@@ -20,8 +20,11 @@ export async function generateIdeas(number, company) {
     .catch(function (error) {
         console.log(error);
     })
-    return ideas */
-    let ideas = [
+    return ideas
+
+
+    
+/*     let ideas = [
         {
             "title": "Desafío de Juego Retro",
             "description": "Un video donde el presentador juega a los videojuegos clásicos de los 80-90 mientras lleva las prendas de Freakuerdos. Cada vez que pierde, se cambia de prenda. El humor proviene de las reacciones exageradas al perder y los comentarios divertidos sobre los juegos."
@@ -44,7 +47,7 @@ export async function generateIdeas(number, company) {
         }
     ]
     await wait(10000)
-    return ideas
+    return ideas */
 }
 
 
