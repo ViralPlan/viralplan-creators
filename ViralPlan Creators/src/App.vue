@@ -113,7 +113,6 @@
       <template id="companies-editor" v-else-if="useRoute().name === 'companies-editor'">
         <button v-on:click="{
           save();
-          cancelCompanies();
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
         <button v-on:click="() => {
           cancelCompanies();
@@ -122,7 +121,6 @@
       <template id="companies-creator" v-else-if="useRoute().name === 'companies-creator'">
         <button v-on:click="() => {
           save();
-          cancelCompanies();
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
         <button v-on:click="cancelCompanies()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
       </template>
@@ -177,14 +175,12 @@
       <template id="plans-editor" v-else-if="useRoute().name === 'plans-editor'">
         <button v-on:click="() => {
           save()
-          cancelPlans()
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Edición</button>
         <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Edición</button>
       </template>
       <template id="plans-creator" v-else-if="useRoute().name === 'plans-creator'">
         <button v-on:click="() => {
           save()
-          cancelPlans()
         }" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Guardar Creación</button>
         <button v-on:click="cancelPlans()" type="button" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800">Cancelar Creación</button>
       </template>

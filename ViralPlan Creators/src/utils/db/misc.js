@@ -17,12 +17,14 @@ export function resetValues() {
   }) 
 }
 export async function cancelPlans() {
-  await resetValues()
-  router.push({name: 'home'})
+  resetValues().then(() => {
+    router.push({name: 'home'})
+  })
 }
 export async function cancelCompanies() {
-  await resetValues()
-  router.push({name: 'home'})
+  resetValues().then(() => {
+    router.push({name: 'home'})
+  })
 }
 export function save(deleting = false) {
   const companyStore = companySelectedStore()
@@ -50,4 +52,9 @@ export function save(deleting = false) {
     },
   };
   updateCompany(filter, updateDoc, options)
+  .then(result => {
+    resetValues().then(() => {
+      router.push({name: 'home'})
+    })
+  })
 }
