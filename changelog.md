@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+## [1.1.0] - 2021-11-20
+
+### Added
+ - Changed from Electron and Svelte to VueJS, Vite frontend and Python Backend
+ - Added page for automated idea generation for companies
+ - One user login to prevent others from using the service
+ - Put program in webpage so it is easier to roll out updates
+### Fixed
+ - Screen text not generating properly for users
+ - Video Scripts not generating with every field they should
+### Changed
+ - Idea text field to text area
+### Removed
+ - Nothing removed in this release
+
+
+## [Released]
+
 ## [1.0.0] - 2023-10-12
 
 ### Added
