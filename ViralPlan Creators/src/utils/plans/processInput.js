@@ -29,9 +29,6 @@ export async function ideaFile(ideas) {
 
 
 export async function processInput(companySelected, plan) {
-  // const PDFLib = require('pdf-lib')
-  // const fs = require('fs')
-  // const fontkit = require('@pdf-lib/fontkit')
   let text = '';
   if (plan.content.length == 5) {
     text = plan_5

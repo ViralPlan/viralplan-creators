@@ -49,6 +49,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { ideaFile } from '../../utils/plans/processInput';
 import { companySelectedStore } from '../../stores/company';
 import VideoView from '../../components/VideoView.vue';
 
