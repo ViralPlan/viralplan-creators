@@ -1,4 +1,51 @@
 import OpenAI from 'openai';
+import axios from 'axios';
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+export async function generateIdeas(number, company) {
+/*     const form = new FormData();
+    let ideas = []
+    for (let i = 0; i < number; i++) {
+        ideas.push('')
+    }
+    form.append('company', company);
+    form.append('number', number.toString());
+    await axios.post('http://54.246.25.15:8000/api/videos', form)
+    .then(function (response) {
+        // valid video ideas json array
+        ideas = response.data
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+    return ideas */
+    let ideas = [
+        {
+            "title": "Desafío de Juego Retro",
+            "description": "Un video donde el presentador juega a los videojuegos clásicos de los 80-90 mientras lleva las prendas de Freakuerdos. Cada vez que pierde, se cambia de prenda. El humor proviene de las reacciones exageradas al perder y los comentarios divertidos sobre los juegos."
+        },
+        {
+            "title": "Pasarela Friki-Retro en la Calle",
+            "description": "Un video en el que el presentador realiza una pasarela improvisada en la calle mostrando las prendas de Freakuerdos. Las reacciones de los transeúntes al desfile aportan situaciones divertidas."
+        },
+        {
+            "title": "Desafío de Cambio de Prenda",
+            "description": "Un video en el que el presentador intenta ponerse todas las prendas de Freakuerdos que puede en un minuto. El humor surge de los intentos fallidos y de cómo se ve el presentador al final."
+        },
+        {
+            "title": "Viaje Retro en el Tiempo",
+            "description": "Un video en el que el presentador 'viaja en el tiempo' a la época de los 80-90, vestido con las prendas de Freakuerdos. Interactúa con objetos y situaciones de esas décadas, creando humor a través de la nostalgia y la exageración."
+        },
+        {
+            "title": "Transformación Freak",
+            "description": "Un video en el que el presentador se transforma de una persona 'normal' a un 'friki-retro' con las prendas de Freakuerdos. Las reacciones de las personas a su nuevo look y su comportamiento exageradamente 'friki' añaden humor."
+        }
+    ]
+    await wait(10000)
+    return ideas
+}
 
 
 export async function generateVideo(idea, company) {
@@ -84,11 +131,10 @@ export async function generateVideo(idea, company) {
             "name": "writeVideo"
         },
     })
-    console.log(chatCompletion)
 
     let result = JSON.parse(chatCompletion.choices[0].message.function_call.arguments)
     let planos = result.planos.join('\n')
-    console.log(planos)
+
     let acting = result.instrucciones.join('\n')
 
     let video = {
@@ -112,17 +158,5 @@ export async function generateVideo(idea, company) {
     if (result.cta) {
         video['texto'] += '\n' + 'CTA: ' + result.cta
     }
-/*     let video = {
-        'titulo': 'titulo',
-        'duracion': '20 segundos',
-        'personas': '2 personas',
-        'horario': '16:00',
-        'lugares': 'las oficinas',
-        'descripcion': 'asdfasd;lfjhasdpfjndalskjfnalsdjfnasjdkfm',
-        'extra': 'pasdjfnpsoa;dikflmpaosi;dfjkmpaso;diflmpa;sodilfkmpa;sl',
-        'texto': 'asdlfkjnasdolkfjnoasdlfkjnaosdilfkjanoaslkdjfn oldksm lksa.d,jfnmlaksdj,fnmalskdjfnmalskdjfnmalsdkjfnmasldkjfnmaslkd.fj,nmaslkd.fjnm aoslkdjf,na sldkj.fnm asldk.jfn salkdjf ',
-        'guion': 'aosidufhaoisdufjnaoidslufjnoasdiulfnaoseifldjnaodlfkjndoasilkjnfosaildkfjnaolSKfjdnoasldkfjndsdoalkfn',
-        'audio': ';landsfjaknsdfolkajsdflkjasdnflkjasdnmf',
-    } */
     return video
 }

@@ -18,6 +18,14 @@ function saveByteArray(byteArray) {
   link.click();
 };
 
+export async function ideaFile(ideas) {
+  var blob = new Blob([ideas], {type: "text/plain;charset=utf-8"});
+  var link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  var fileName = 'ideas.txt';
+  link.download = fileName;
+  link.click();
+}
 
 
 export async function processInput(companySelected, plan) {

@@ -12,7 +12,6 @@
   companiesStore.companiesArray.forEach(company => {
     companyNames.push(company['company']['name'])
   })
-  console.log(companyNames)
 </script>
 
 <template>

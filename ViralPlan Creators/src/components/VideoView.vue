@@ -11,7 +11,7 @@
     </template>
     <template v-if="!ideaOrVideo">
         <template v-if="loading" class="mx-auto mt-8">
-            <div class="orbit-spinner mx-auto mt-8 w-1/3">
+            <div class="orbit-spinner mx-auto mt-8">
                 <div class="orbit"></div>
                 <div class="orbit"></div>
                 <div class="orbit"></div>
@@ -45,6 +45,7 @@
     const props = defineProps({
         videoIndex: Number
     })
+
     import { ref } from 'vue';
     import { generateVideo } from '@/utils/plans/promptGPT.js'
     import { companySelectedStore } from '../stores/company.js';
@@ -52,10 +53,10 @@
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     const companyStore = companySelectedStore()
-    const idea = ref('')
+    const idea = ref(companyStore.planSelectedObject.content[props.videoIndex]);
     let loading = ref(false);
     let ideaOr = true;
-    if (companyStore.planSelectedObject.content[props.videoIndex] == '') {
+    if (typeof companyStore.planSelectedObject.content[props.videoIndex] === 'string') {
         ideaOr = ref(true)
     } else {
         ideaOr = ref(false)
