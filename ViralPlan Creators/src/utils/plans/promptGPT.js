@@ -12,7 +12,7 @@ export async function generateIdeas(number, company) {
     }
     form.append('company', company);
     form.append('number', number.toString());
-    await axios.post('http://54.246.25.15:8000/api/videos', form)
+    await axios.post('http://localhost:8000/api/videos', form)
     .then(function (response) {
         // valid video ideas json array
         ideas = response.data
