@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { companiesArrayStore } from '@/stores/companies.js'
 import * as Realm from "realm-web";
 import router from '@/router'
+import axios from 'axios';
 
 export const authStore = defineStore({
   id: 'auth',
