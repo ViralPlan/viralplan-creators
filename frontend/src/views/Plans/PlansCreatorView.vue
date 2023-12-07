@@ -11,6 +11,7 @@
                     realIdeas.push(idea['description']);
                 }); */
                 loading = false;
+                companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
                     date: formatDate(),
                     content: realIdeas
@@ -26,6 +27,7 @@
                     realIdeas.push(idea['description']);
                 }); */
                 loading = false;
+                companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
                     date: formatDate(),
                     content: realIdeas

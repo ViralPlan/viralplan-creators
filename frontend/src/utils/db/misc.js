@@ -5,11 +5,11 @@ import router from '@/router/index.js'
 
 
 
-export function resetValues() {
+export async function resetValues() {
   const companiesStore = companiesArrayStore()
   const companyStore = companySelectedStore()
-  companyStore.$reset()
-  companiesStore.$reset()
+  await companyStore.$reset()
+  await companiesStore.$reset()
   companiesStore.companiesArrayPromise.then((result) => {
     result.forEach(company => {
       companiesStore.companiesArray.push(company)
@@ -31,19 +31,15 @@ export function save(deleting = false) {
   const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
   const options = { upsert: true };
 
-  if (companyStore.planSelected != '') {
-    let up = false;
-    for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
-      if ((companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) && (!deleting)) {
-        companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
-        up = true;
-      }
+  let up = false;
+  for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
+    if ((companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) && (!deleting)) {
+      companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
+      up = true;
     }
-    if (!up && !deleting) {
-      companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
-    }
-
-    // companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
+  }
+  if (!up && !deleting) {
+    companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
   }
   // Specify the update to set a value for the plot field
   const updateDoc = {
@@ -51,6 +47,7 @@ export function save(deleting = false) {
       company: companyStore.companySelectedObject.company
     },
   };
+  console.log(updateDoc)
   updateCompany(filter, updateDoc, options)
   .then(result => {
     resetValues().then(() => {
