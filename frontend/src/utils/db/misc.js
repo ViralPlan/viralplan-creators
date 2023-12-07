@@ -31,7 +31,7 @@ export function save(deleting = false) {
   const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
   const options = { upsert: true };
 
-  if (companyStore.planSelectedObject.date != '') {
+  if (companyStore.planSelected != '') {
     let up = false;
     for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
       if ((companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) && (!deleting)) {

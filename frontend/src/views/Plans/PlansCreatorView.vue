@@ -5,11 +5,11 @@
             <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="async () => {
                 videoQArray = [0, 1, 2, 3, 4];
                 loading = true;
-                let ideas = await generateIdeas(5, companyStore.companySelectedObject.company.form);
-                let realIdeas = [];
-                ideas.forEach(idea => {
+                let ideas = ['','','','','']; //await generateIdeas(5, companyStore.companySelectedObject.company.form);
+                let realIdeas = ideas;//[];
+/*                 ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
-                });
+                }); */
                 loading = false;
                 companyStore.planSelectedObject = {
                     date: formatDate(),
@@ -20,11 +20,11 @@
             <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="async () => {
                 videoQArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
                 loading = true;
-                let ideas = await generateIdeas(20, companyStore.companySelectedObject.company.form);
-                let realIdeas = [];
-                ideas.forEach(idea => {
+                let ideas = ['','','','','','','','','','','','','','','','','','','',''];//await generateIdeas(20, companyStore.companySelectedObject.company.form);
+                let realIdeas = ideas;//[];
+/*                 ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
-                });
+                }); */
                 loading = false;
                 companyStore.planSelectedObject = {
                     date: formatDate(),

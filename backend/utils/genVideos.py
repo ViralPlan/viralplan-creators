@@ -1,12 +1,17 @@
 from autogen.agentchat import AssistantAgent
 import autogen
 import json
+import os
 
-
+config_list = [
+    {
+        
+    }
+]
 
 def genVideos(company_form, num):
     config_list_gpt4 = autogen.config_list_from_json(
-        "OAI_CONFIG_LIST.json",
+        "OAI_CONFIG_LIST",
         filter_dict={
             "model": ["gpt-4"],
         },
