@@ -1,6 +1,8 @@
 import { fileURLToPath, URL } from 'node:url'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { defineConfig } from 'vite'
+import { splitVendorChunkPlugin } from 'vite';
+// import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import vue from '@vitejs/plugin-vue'
 // import vitePluginRequire from "vite-plugin-require";
 
@@ -15,6 +17,8 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    splitVendorChunkPlugin(),
+    // chunkSplitPlugin(),
     // vitePluginRequire(),
     nodePolyfills({
       // To add only specific polyfills, add them here. If no option is passed, adds all polyfills

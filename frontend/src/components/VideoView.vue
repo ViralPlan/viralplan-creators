@@ -5,7 +5,7 @@
         <button class="bg-pink-600 text-white rounded-lg w-full my-8" v-on:click="async () => {
             ideaOrVideo = false;
             loading = true;
-            companyStore.planSelectedObject.content[videoIndex] = await generateVideo(idea, companyStore.companySelectedObject.company.form);
+            companyStore.planSelectedObject.content[videoIndex] = await generateVideo(companyStore.planSelectedObject.content[props.videoIndex], companyStore.companySelectedObject.company.form);
             loading = false;
         }" style="height: 5vh;"><strong>Generar video</strong></button>
     </template>
