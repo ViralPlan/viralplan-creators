@@ -49,8 +49,6 @@
     import { ref } from 'vue';
     import { generateVideo } from '@/utils/plans/promptGPT.js'
     import { companySelectedStore } from '../stores/company.js';
-    // import { QuillEditor } from '@vueup/vue-quill'
-    import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
     const companyStore = companySelectedStore()
     const idea = ref(companyStore.planSelectedObject.content[props.videoIndex]);
