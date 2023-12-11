@@ -7,7 +7,6 @@ function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 export async function generateIdeas(company, number) {
-    console.log('Hi')
     let ideas = []
     for (let i = 0; i < number; i++) {
         ideas.push('')

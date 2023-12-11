@@ -5,12 +5,15 @@
             <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="async () => {
                 videoQArray = [0, 1, 2, 3, 4];
                 loading = true;
-                console.log('hi1')
-                let ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 5);
-                let realIdeas = [];
-                ideas.forEach(idea => {
-                  realIdeas.push(idea['description']);
-                });
+                let ideas = ['', '', '', '', '']
+                let realIdeas = ideas;
+                if (checked) {
+                  ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 5);
+                  realIdeas = [];
+                  ideas.forEach(idea => {
+                    realIdeas.push(idea['description']);
+                  });
+                }
                 loading = false;
                 companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
@@ -22,11 +25,15 @@
             <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="async () => {
                 videoQArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
                 loading = true;
-                let ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 20);
-                let realIdeas = [];
-                ideas.forEach(idea => {
+                let ideas = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+                let realIdeas = ideas;
+                if (checked) {
+                  ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 20);
+                  realIdeas = [];
+                  ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
-                });
+                  });
+                }
                 loading = false;
                 companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
@@ -35,6 +42,10 @@
                 }
                 videoQ = 20;
             }"><strong>Veinte vídeos</strong></button>
+        </div>
+        <div class="mt-8">
+          <input type="checkbox" id="checkbox" v-model="checked" />
+          <label for="checkbox" class="ml-2">Generar ideas automáticamente</label>
         </div>
     </div>
     <div v-else-if="loading == true && videoQ == 0">
@@ -103,6 +114,7 @@ import { ideaFile } from '../../utils/plans/processInput';
 import { companySelectedStore } from '../../stores/company';
 import VideoView from '../../components/VideoView.vue';
 
+let checked = ref(false);
 let loading = ref(false)
 let ideasAccepted = ref(false)
 let videoQ = ref(0) // Number of videos to create
