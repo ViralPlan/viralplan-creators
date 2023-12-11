@@ -1,31 +1,29 @@
 import OpenAI from 'openai';
 import axios from 'axios';
+import { genIdeas } from './ideaGeneration';
+
 
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-export async function generateIdeas(number, company) {
-    const form = new FormData();
+export async function generateIdeas(company, number) {
+    console.log('Hi')
     let ideas = []
     for (let i = 0; i < number; i++) {
         ideas.push('')
     }
-    form.append('company', company);
-    form.append('number', number.toString());
-    form.append('crossDomain', true)
-    await axios({method: "post", url: 'http://localho.st:8000/api/videos', data: form, headers: {"Content-Type": "multipart/form-data", 'Access-Control-Allow-Origin': '*'}})
-    .then(function (response) {
+    // await axios({method: "post", url: 'http://143.47.41.72/api/videos', data: form, headers: {"Content-Type": "multipart/form-data", 'Access-Control-Allow-Origin': '*'}})
+    await genIdeas(company, number, 'gpt-4', import.meta.env.VITE_OPENAI_KEY)
+    .then((response) => {
         // valid video ideas json array
-        ideas = response.data
+        ideas = JSON.parse(response)
     })
-    .catch(function (error) {
+    .catch((error) => {
         console.log(error);
     })
     return ideas
 
-
-    
-/*     let ideas = [
+/*     ideas = [
         {
             "title": "Desafío de Juego Retro",
             "description": "Un video donde el presentador juega a los videojuegos clásicos de los 80-90 mientras lleva las prendas de Freakuerdos. Cada vez que pierde, se cambia de prenda. El humor proviene de las reacciones exageradas al perder y los comentarios divertidos sobre los juegos."
@@ -49,6 +47,7 @@ export async function generateIdeas(number, company) {
     ]
     await wait(10000)
     return ideas */
+
 }
 
 
