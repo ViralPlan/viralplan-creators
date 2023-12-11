@@ -22,11 +22,11 @@
             <button class="col-span-1 mr-8 text-white bg-pink-600 w-5/6 rounded-lg" style="height: 5vh;" @:click="async () => {
                 videoQArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
                 loading = true;
-                let ideas = ['','','','','','','','','','','','','','','','','','','',''];//await generateIdeas(20, companyStore.companySelectedObject.company.form);
-                let realIdeas = ideas;//[];
-/*                 ideas.forEach(idea => {
+                let ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 20);
+                let realIdeas = [];
+                ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
-                }); */
+                });
                 loading = false;
                 companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
@@ -67,7 +67,7 @@
       <div v-else >
         <div class="grid grid-cols-2">
             <div class="col-span-1 w-full float-left">
-                <h1><strong>{{ companyStore.companySelected }} - Video {{ currentPage }}</strong></h1>
+                <h1 class="text-xl"><strong>{{ companyStore.companySelected }} - Video {{ currentPage }}</strong></h1>
             </div>
             <div class="col-span-1 flex justify-end">
                 <a @:click="() => {
