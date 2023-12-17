@@ -9,7 +9,6 @@
 <script setup>
     import { ref } from 'vue'
     import { FwbInput } from 'flowbite-vue'
-    import { addCompany } from '@/utils/db/companyModel.js'
     import { companySelectedStore } from '../../stores/company';
 
     const companyStore = companySelectedStore()
@@ -17,6 +16,7 @@
     const email = ref('')
     const tel = ref('')
     const form = ref('')
+    const ideas = []
     const plans = []
 
     companyStore.companySelectedObject = {
@@ -25,6 +25,7 @@
             email: email,
             tel: tel,
             form: form,
+            ideas: ideas,
             plans: plans
         }
     }

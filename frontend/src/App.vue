@@ -1,85 +1,40 @@
 <script setup>
   import Sidebar from './components/App/Sidebar.vue'
   import { useRoute } from 'vue-router'
+  import { getUserTokens, getPreviousMonday } from '@/utils/db/misc.js';
   import router from './router/index.js';
   import { companySelectedStore } from './stores/company.js';
-  import { companiesArrayStore } from './stores/companies.js'
-  import { authStore } from './stores/auth';
-  import { watch } from 'vue';
+  import { companiesArrayStore } from './stores/companies.js';
+  import { userStore } from './stores/user.js';
+  import { useAuth0 } from '@auth0/auth0-vue';
   import { processInput } from '@/utils/plans/processInput.js';
   import { save, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
+  import { watch } from 'vue';
 
 
-  const auth = authStore()
   const companyStore = companySelectedStore()
 
-  watch(() => auth.auth, () => {
-    if (auth.auth) {
-      const companiesStore = companiesArrayStore()
-      companiesStore.$reset()
-    
-      companiesStore.companiesArrayPromise.then((result) => {
-        result.forEach(company => {
-          companiesStore.companiesArray.push(company)
+  const {isAuthenticated, isLoading, user} = useAuth0()
+
+  watch(isLoading, async (currentValue) => {
+    if (!currentValue) {
+      if (isAuthenticated.value) {
+        const companiesStore = companiesArrayStore()
+        companiesStore.$reset()
+        const onlineUser = user ? user.value : ""
+
+        const localUser = userStore();
+        localUser.email = onlineUser.email;
+        localUser.tokens = await getUserTokens(localUser.email)
+
+        companiesStore.companiesArrayPromise.then((result) => {
+          result.forEach(company => {
+            companiesStore.companiesArray.push(company)
+          })
         })
-      })
+      }
     }
   })
-
-  if (auth.user) {
-    const companiesStore = companiesArrayStore()
-    companiesStore.$reset()
-  
-    companiesStore.companiesArrayPromise.then((result) => {
-      result.forEach(company => {
-        companiesStore.companiesArray.push(company)
-      })
-    })
-  }
-
-/*   function resetValues() {
-    const companiesStore = companiesArrayStore()
-    companyStore.$reset()
-    companiesStore.$reset()
-    companiesStore.companiesArrayPromise.then((result) => {
-      result.forEach(company => {
-        companiesStore.companiesArray.push(company)
-      })
-    }) 
-  }
-  function cancelPlans() {
-    resetValues()
-    router.push({name: 'home'})
-  }
-  function cancelCompanies() {
-    resetValues()
-    router.push({name: 'home'})
-  }
-  function save() {
-    const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
-    const options = { upsert: true };
-    if (companyStore.planSelectedObject.date != '') {
-      let up = false;
-      for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
-        if (companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) {
-          companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
-          up = true;
-        }
-      }
-      if (!up) {
-        companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
-      }
-
-      // companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
-    }
-    // Specify the update to set a value for the plot field
-    const updateDoc = {
-      $set: {
-        company: companyStore.companySelectedObject.company
-      },
-    };
-    updateCompany(filter, updateDoc, options)
-  } */
 </script>
 
 <template id="main">

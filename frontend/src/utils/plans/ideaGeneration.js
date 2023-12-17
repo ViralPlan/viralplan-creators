@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { companySelectedStore } from "@/stores/company.js"
 
 class AiAgent {
     constructor(name, prompt, config) {
@@ -13,21 +14,61 @@ class AiAgent {
     }
 
     async complete(question) {
+        const schema = {
+            "type": "object",
+            "properties": {
+                "ideas": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "description": "A short form version of the video idea"
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "A long version of the video idea, between 70 and 100 words long"
+                            }
+                        },
+                        "required": [
+                            "title",
+                            "description"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "ideas"
+            ]
+        }
+        
         const chatCompletion = await this.openai.chat.completions.create({
             messages: [
                 { role: 'system', content: this.creationPrompt},
                 { role: 'user', content: question}
             ],
             model: this.config.model,
-            temperature: this.config.temperature
+            functions:[
+                {
+                        "name": "writeIdeas",
+                        "description": "Escribe o cambia ideas de video para tiktok con la información que se ha dado",
+                        "parameters": schema
+                }
+            ],
+            function_call: {
+                "name": "writeIdeas"
+            },
+            temperature: parseFloat(this.config.temperature)
 
         })
-        return chatCompletion.choices[0].message.content;
+        return chatCompletion.choices[0].message.function_call.arguments;
     }
 }
 
 export async function genIdeas(companyForm, num, model, apiKey) {
-    const start = Date.now();
+    const company = companySelectedStore();
+
     const adminAgentPrompt = `You are the representative of ViralPlan. Your work is to create ideas
     for the company asked. The ideas have to be able to be in short form, because they are for tiktok
     . You will be working with three other people: one that makes sure 
@@ -58,16 +99,17 @@ export async function genIdeas(companyForm, num, model, apiKey) {
     to the ideas or just discard them if you think they are not good enough, and add a new one.
     You should always return the same number of ideas that the idea creator gave you.
     They cannot show the brand or product of the company in a bad light.
-    Enfasis on FUN, CREATIVE AND ORIGINAL. ALL OF THEM MUST BE FUN AND ORIGINAL. `
+    Enfasis on FUN, CREATIVE AND ORIGINAL. ALL OF THEM MUST BE FUN AND ORIGINAL. 
+    Everything you do, return just VALID JSON STRING. If they are not in spanish, translate them.`
 
-    let llm_config_1 = {"temperature": 1, "model": model, "apiKey": apiKey}
+    let llm_config_1 = {"temperature": 0.8, "model": model, "apiKey": apiKey}
     let llm_config_2 = {"temperature": 0.2, "model": model, "apiKey": apiKey}
     let llm_config_3 = {"temperature": 0.5, "model": model, "apiKey": apiKey}
 
-    const adminAgent = new AiAgent('admin', adminAgentPrompt, llm_config_2);
+    const adminAgent = new AiAgent('admin', adminAgentPrompt, llm_config_3);
     const expertAgent = new AiAgent('expert', expertAgentPrompt, llm_config_1);
     const criticAgent = new AiAgent('critic', criticAgentPrompt, llm_config_2);
-    const tiktokerAgent = new AiAgent('tiktoker', tiktokerAgentPrompt, llm_config_3);
+    const tiktokerAgent = new AiAgent('tiktoker', tiktokerAgentPrompt, llm_config_1);
 
     let agents = {'admin': adminAgent, 'expert': expertAgent, 'critic': criticAgent, 'tiktoker': tiktokerAgent}
     let chatChain = ['admin', 'expert', 'critic', 'tiktoker', 'expert']
@@ -75,24 +117,18 @@ export async function genIdeas(companyForm, num, model, apiKey) {
     let lastAnswer = 
     `
     Generate ${num} different video ideas, which have to be fun and with high probability to go viral for the following company: ${companyForm}. 
+    They cannot be any of this ideas: ${company.companySelectedObject.company.ideas}.
     Enfasis on FUN, CREATIVE AND ORIGINAL. ALL OF THEM MUST BE FUN AND ORIGINAL. 
     Do them in spanish and return them in json format. The last response has to be JUST VALID JSON. The schema is the following:
-    [
-        {
-            title: "title",
-            description: "description"
-        }
-    ]
     .
     `
     for (let i = 0; i < chatChain.length; i++) {
         await agents[chatChain[i]].complete(lastAnswer).then((ideas) => {
             lastAnswer = ideas;
-        })  
+        })
     };
-    const end = Date.now();
-    console.log(`Execution time: ${end - start} ms`);
-    return lastAnswer;
+
+    return JSON.parse(lastAnswer)['ideas'];
 }
 
 

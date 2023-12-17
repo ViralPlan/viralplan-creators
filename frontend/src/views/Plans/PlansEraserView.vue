@@ -14,7 +14,6 @@
 
 <script setup>
 import { companySelectedStore } from '../../stores/company';
-import { FwbInput } from 'flowbite-vue';
 import { save, cancelPlans } from '@/utils/db/misc.js'
 
 const companyStore = companySelectedStore()

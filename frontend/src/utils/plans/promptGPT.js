@@ -12,13 +12,17 @@ export async function generateIdeas(company, number) {
         ideas.push('')
     }
     // await axios({method: "post", url: 'http://143.47.41.72/api/videos', data: form, headers: {"Content-Type": "multipart/form-data", 'Access-Control-Allow-Origin': '*'}})
+
     await genIdeas(company, number, 'gpt-4', import.meta.env.VITE_OPENAI_KEY)
     .then((response) => {
         // valid video ideas json array
-        ideas = JSON.parse(response)
+        for (let i = 0; i < response.length; i++) {
+            ideas[i] = response[i];
+        }
     })
     .catch((error) => {
         console.log(error);
+        console.log(answer);
     })
     return ideas
 
@@ -48,7 +52,6 @@ export async function generateIdeas(company, number) {
     return ideas */
 
 }
-
 
 export async function generateVideo(idea, company) {
     const openai = new OpenAI({

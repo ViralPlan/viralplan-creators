@@ -7,9 +7,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue'
     import { FwbInput } from 'flowbite-vue'
-    import { addCompany } from '@/utils/db/companyModel.js'
     import { companySelectedStore } from '../../stores/company';
 
     const companyStore = companySelectedStore()

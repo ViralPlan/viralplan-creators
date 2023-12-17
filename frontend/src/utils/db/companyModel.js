@@ -1,22 +1,17 @@
-import { authStore } from '@/stores/auth.js'
-import { createPinia } from 'pinia';
-import { createApp } from 'vue'
-import App from '@/App.vue'
 import * as Realm from "realm-web";
-
 
 export async function getCompanies() {
     try {
-        const auth = authStore()
         const {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
+        const credentials = Realm.Credentials.anonymous();
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
         const result = await client.db('companies').collection("companies").find({});
+        const end = Date.now();
         return result;
     } catch (e) {
         console.error(e);
@@ -25,12 +20,11 @@ export async function getCompanies() {
 
 export async function getCompany(name) {
     try {
-        const auth = authStore()
         const {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
+        const credentials = Realm.Credentials.anonymous();
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
@@ -41,31 +35,13 @@ export async function getCompany(name) {
     }
 }
 
-export async function addCompany(company) {
-    try {
-        const auth = authStore()
-        const {
-            BSON: { ObjectId },
-          } = Realm;
-        const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.email, auth.password);
-        const user = await app.logIn(credentials)
-        console.assert(user.id === app.currentUser.id);
-        const client = app.currentUser.mongoClient("mongodb-atlas");
-        const result = await client.db("companies").collection("companies").insertOne({company});
-    } catch (e) {
-        console.error(e);
-    }
-}
-
 export async function updateCompany(filter, updateDoc, options) {
     try {
-        const auth = authStore()
         const {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
+        const credentials = Realm.Credentials.anonymous();
         const user = await app.logIn(credentials)
         console.assert(user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");
@@ -77,12 +53,11 @@ export async function updateCompany(filter, updateDoc, options) {
 
 export async function deleteCompany(filter) {
     try {
-        const auth = authStore()
         const {
             BSON: { ObjectId },
           } = Realm;
         const app = new Realm.App({ id: 'application-0-qitnr' });
-        const credentials = Realm.Credentials.emailPassword(auth.user.email, auth.user.password);
+        const credentials = Realm.Credentials.anonymous();
         const user = await app.logIn(credentials)
         console.assert(auth.user.id === app.currentUser.id);
         const client = app.currentUser.mongoClient("mongodb-atlas");

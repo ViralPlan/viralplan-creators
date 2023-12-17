@@ -7,18 +7,34 @@
                 loading = true;
                 let ideas = ['', '', '', '', '']
                 let realIdeas = ideas;
-                if (checked) {
+                if (checked && userField.tokens >= 5) {
+                  userField.tokens -= 5;
                   ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 5);
                   realIdeas = [];
                   ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
                   });
+                } else if (checked && userField.tokens < 5 && userField.tokens > 0) {
+                  ideas = await generateIdeas(companyStore.companySelectedObject.company.form, userField.tokens);
+                  realIdeas = [];
+                  ideas.forEach(idea => {
+                    realIdeas.push(idea['description']);
+                  });
+                  for (let i = 0; i < userField.tokens; i++) {
+                    realIdeas.push('');
+                  } 
+                  userField.tokens = 0;
+                  tokensWarning = true;
+                } else {
+                  tokensWarning = true;
                 }
+                updateUser();
+                  
                 loading = false;
                 companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
-                    date: formatDate(),
-                    content: realIdeas
+                  date: formatDate(),
+                  content: realIdeas
                 }
                 videoQ = 5;
             }"><strong>Cinco vídeos</strong></button>
@@ -27,13 +43,28 @@
                 loading = true;
                 let ideas = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
                 let realIdeas = ideas;
-                if (checked) {
+                if (checked && userField.tokens >= 20) {
+                  userField.tokens -= 20;
                   ideas = await generateIdeas(companyStore.companySelectedObject.company.form, 20);
                   realIdeas = [];
                   ideas.forEach(idea => {
                     realIdeas.push(idea['description']);
                   });
+                } else if (checked && userField.tokens < 20 && userField.tokens > 0) {
+                  ideas = await generateIdeas(companyStore.companySelectedObject.company.form, userField.tokens);
+                  realIdeas = [];
+                  ideas.forEach(idea => {
+                    realIdeas.push(idea['description']);
+                  });
+                  for (let i = 0; i < userField.tokens; i++) {
+                    realIdeas.push('');
+                  }
+                  userField.tokens = 0;
+                  tokensWarning = true;
+                } else {
+                  tokensWarning = true;
                 }
+                updateUser();
                 loading = false;
                 companyStore.planSelected = formatDate()
                 companyStore.planSelectedObject = {
@@ -49,7 +80,7 @@
         </div>
     </div>
     <div v-else-if="loading == true && videoQ == 0">
-        <h3 class="text-xl"><strong>Puede tardar varios minutos</strong></h3>
+        <h3 class="text-xl"><strong>Este proceso tardará alrededor de {{ 0.5 * videoQArray.length }} minutos, pero puede tardar hasta 15</strong></h3>
         <div class="orbit-spinner mx-auto mt-8">
             <div class="orbit"></div>
             <div class="orbit"></div>
@@ -59,6 +90,7 @@
     <div v-else >
       <div v-if="!ideasAccepted">
         <h1 class="text-2xl"><strong>Ideas Generadas</strong></h1>
+        <p class="text-red" v-if="tokensWarning">No dispones de suficientes tokens esta generación, por lo que solo se han generado ideas para tantos tokens como te quedasen</p>
         <div v-for="el in videoQArray">
           <h2 class="text-xl mt-4 mb-1"><strong>Idea {{ el + 1 }}</strong></h2>
           <textarea v-model="companyStore.planSelectedObject.content[el]" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="En el video aparecen..."></textarea>
@@ -108,18 +140,22 @@
 
 <script setup>
 import { generateIdeas } from '../../utils/plans/promptGPT';
-import { formatDate } from '@/utils/db/planModel.js'
+import { formatDate } from '@/utils/db/misc.js';
+import { updateUser } from '../../utils/db/misc';
 import { ref } from 'vue';
 import { ideaFile } from '../../utils/plans/processInput';
 import { companySelectedStore } from '../../stores/company';
+import { userStore } from '../../stores/user';
 import VideoView from '../../components/VideoView.vue';
 
-let checked = ref(false);
+let checked = ref(false)
+let tokensWarning = ref(false)
 let loading = ref(false)
 let ideasAccepted = ref(false)
 let videoQ = ref(0) // Number of videos to create
 let videoQArray = ref([])
 const companyStore = companySelectedStore()
+const userField = ref(userStore())
 
 const currentPage = ref(1)
 </script>

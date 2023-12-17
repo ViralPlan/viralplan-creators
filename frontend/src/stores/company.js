@@ -1,4 +1,3 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const companySelectedStore = defineStore('company', {
@@ -15,6 +14,7 @@ export const companySelectedStore = defineStore('company', {
           email: '',
           tel: '',
           form: '',
+          ideas: [],
           plans: []
         }
       },

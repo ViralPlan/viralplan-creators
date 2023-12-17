@@ -14,7 +14,6 @@
 
 <script setup>
 import { companySelectedStore } from '../../stores/company';
-import { FwbInput } from 'flowbite-vue';
 import { deleteCompany } from '@/utils/db/companyModel.js'
 import { cancelCompanies } from '@/utils/db/misc.js'
 
