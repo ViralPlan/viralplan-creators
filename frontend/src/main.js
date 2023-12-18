@@ -21,7 +21,8 @@ app.use(
             redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL,
         },
         legacySameSiteCookie: false,
-        useRefreshTokens: true
+        useRefreshTokens: true,
+        cacheLocation: 'localstorage'
     }),
 );
 app.use(pinia)
