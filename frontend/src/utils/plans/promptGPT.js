@@ -11,7 +11,6 @@ export async function generateIdeas(company, number) {
     for (let i = 0; i < number; i++) {
         ideas.push('')
     }
-    // await axios({method: "post", url: 'http://143.47.41.72/api/videos', data: form, headers: {"Content-Type": "multipart/form-data", 'Access-Control-Allow-Origin': '*'}})
 
     await genIdeas(company, number, 'gpt-4', import.meta.env.VITE_OPENAI_KEY)
     .then((response) => {

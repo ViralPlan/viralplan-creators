@@ -51,15 +51,25 @@ export async function getUserTokens(email) {
 
       let last_monday = getPreviousMonday();
 
+      const userField = userStore()
+
       if (result.length > 0) {
+        userField.date = result[0].user.date;
+        userField.tokens = result[0].user.tokens;
+        userField.tier = result[0].user.tier;
+
         if (last_monday != result[0].user.date) {
           const filter = {
             'user.email': result[0].user.email
           }
           result[0].user.date = last_monday
-          result[0].user.tokens = 40
+          if (result[0].user.tier > 0) {
+            result[0].user.tokens = 60;
+          } else {
+            result[0].user.tokens = 30
+          }
+          result[0].user.tokens = 30
           const options = { upsert: true };
-          const userField = userStore()
           const updateDoc = {
             $set: result[0]
           };
@@ -70,7 +80,7 @@ export async function getUserTokens(email) {
         try {
             const document = {"user": {
               "email": email,
-              "tokens": 40,
+              "tokens": 30,
               "tier": 0,
               "date": last_monday,
             }}
