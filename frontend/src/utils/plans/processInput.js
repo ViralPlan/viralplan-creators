@@ -4,7 +4,7 @@ import fs from 'fs'
 import * as process from 'process'
 import { toBase64 } from 'js-base64';
 import path from 'path'
-import { PDFDocument, encodeToBase64 } from 'pdf-lib'
+import { PDFDocument, encodeToBase64, setLineHeight } from 'pdf-lib'
 import fontkit from '@pdf-lib/fontkit'
 import { fontBytes } from '@/utils/plans/font.js'
 
@@ -51,14 +51,16 @@ export async function processInput(companySelected, plan) {
   for (let i = 0; i < plan['content'].length; i++) {
     video = plan['content'][i]
     try {
+      field = form.getTextField(`video_${videoNumber.toString().padStart(2, '0')}`)
+      field.setText('VÍDEO ' + videoNumber.toString())
       field = form.getTextField(`guion_${videoNumber.toString().padStart(2, '0')}`)
       field.setText(video.guion)
       field = form.getTextField(`texto_${videoNumber.toString().padStart(2, '0')}`)
       field.setText(video.texto)
       field = form.getTextField(`audio_${videoNumber.toString().padStart(2, '0')}`)
-      field.setText(video.audio)
+      field.setText('                      ' + video.audio)
       field = form.getTextField(`descripcion_${videoNumber.toString().padStart(2, '0')}`)
-      field.setText(video.descripcion)
+      field.setText('                                    ' + video.descripcion)
       field = form.getTextField(`duracion_${videoNumber.toString().padStart(2, '0')}`)
       field.setText(video.duracion)
       field = form.getTextField(`extra_${videoNumber.toString().padStart(2, '0')}`)

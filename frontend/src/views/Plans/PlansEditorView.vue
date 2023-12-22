@@ -36,9 +36,9 @@
         <button class="bg-pink-600 text-white rounded-lg w-full mt-8" v-on:click="async () => {
           let content = [];
           let i = 1;
-          companyStore.planSelectedObject.content.forEach(idea => {
-            content.push('Idea ' + i + ': \n' + idea + '\n\n');
-          });
+          for (let i = 1; i < companyStore.planSelectedObject.content.length+1; i++) {
+            content.push('Idea ' + i + ': \n' + companyStore.planSelectedObject.content[i-1] + '\n\n');
+          }
           ideaFile(content.join('\n'));
         }" style="height: 5vh;"><strong>Descargar Ideas</strong></button>
         <button class="bg-pink-600 text-white rounded-lg w-full mb-8 mt-1" v-on:click="async () => {

@@ -32,10 +32,62 @@ export async function updateUser() {
       }
     };
     await client.db("companies").collection("users").updateOne(filter, updateDoc, options);
-} catch (err) {
-  console.log(err);
+  } catch (err) {
+    console.log(err);
+  }
 }
+
+export async function saveGoodIdea(idea) {
+  try {
+    const companyStore = companySelectedStore()
+    const {
+      BSON: { ObjectId },
+    } = Realm;
+    const app = new Realm.App({ id: 'application-0-qitnr' });
+    const credentials = Realm.Credentials.anonymous();
+    const user = await app.logIn(credentials)
+    console.assert(user.id === app.currentUser.id);
+    const client = app.currentUser.mongoClient("mongodb-atlas");
+
+    const document =   {"idea": {
+      "date": formatDate(),
+      "company": companyStore.companySelected,
+      "idea": idea
+    }}
+    const result = await client.db("companies").collection("good-ideas").insertOne(document);
+  } catch (err) {
+    console.log(err);
+  }
 }
+
+
+export async function saveInitialIdeas(ideas) {
+  try {
+    const companyStore = companySelectedStore()
+    let document = {}
+    const {
+      BSON: { ObjectId },
+    } = Realm;
+    const app = new Realm.App({ id: 'application-0-qitnr' });
+    const credentials = Realm.Credentials.anonymous();
+    const user = await app.logIn(credentials)
+    console.assert(user.id === app.currentUser.id);
+    const client = app.currentUser.mongoClient("mongodb-atlas");
+    let result = [];
+
+    for (let i = 0; i < ideas.length; i++) {
+      document =   {"idea": {
+        "date": formatDate(),
+        "company": companyStore.companySelected,
+        "idea": ideas[i]
+      }}
+      result = await client.db("companies").collection("bad-ideas").insertOne(document);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 
 export async function getUserTokens(email) {
   try {
@@ -55,20 +107,16 @@ export async function getUserTokens(email) {
 
       if (result.length > 0) {
         userField.date = result[0].user.date;
-        userField.tokens = result[0].user.tokens;
-        userField.tier = result[0].user.tier;
+        userField.tokens = parseInt(result[0].user.tokens);
+        userField.tier = parseInt(result[0].user.tier);
 
         if (last_monday != result[0].user.date) {
           const filter = {
             'user.email': result[0].user.email
           }
           result[0].user.date = last_monday
-          if (result[0].user.tier > 0) {
-            result[0].user.tokens = 60;
-          } else {
-            result[0].user.tokens = 30
-          }
-          result[0].user.tokens = 30
+
+          result[0].user.tokens = 30 + (30*userField.tier)
           const options = { upsert: true };
           const updateDoc = {
             $set: result[0]

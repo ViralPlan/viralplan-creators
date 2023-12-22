@@ -78,6 +78,15 @@
           <input type="checkbox" id="checkbox" v-model="checked" />
           <label for="checkbox" class="ml-2">Generar ideas automáticamente</label>
         </div>
+        <div>
+          <p class="text-md text-white">
+            El número de ideas que puedes generar es limitado, debido al alto coste
+            económico que tiene generarlas. Úsalas solo cuando sea necesario.<br><br>
+          </p>
+          <p class="text-white text-lg">
+            Puedes generar como máximo {{ userField.tokens }} ideas de vídeos esta semana
+          </p>
+        </div>
     </div>
     <div v-else-if="loading == true && videoQ == 0">
         <h3 class="text-xl"><strong>Este proceso tardará alrededor de {{ 0.5 * videoQArray.length }} minutos, pero puede tardar hasta 15</strong></h3>
@@ -97,10 +106,10 @@
         </div>
         <button class="bg-pink-600 text-white rounded-lg w-full mt-8" v-on:click="async () => {
           let content = [];
-          let i = 1;
-          companyStore.planSelectedObject.content.forEach(idea => {
-            content.push('Idea ' + i + ': \n' + idea + '\n\n');
-          });
+          for (let i = 1; i < companyStore.planSelectedObject.content.length+1; i++) {
+            content.push('Idea ' + i + ': \n' + companyStore.planSelectedObject.content[i-1] + '\n\n');
+          }
+
           ideaFile(content.join('\n'));
         }" style="height: 5vh;"><strong>Descargar Ideas</strong></button>
         <button class="bg-pink-600 text-white rounded-lg w-full mb-8 mt-1" v-on:click="async () => {

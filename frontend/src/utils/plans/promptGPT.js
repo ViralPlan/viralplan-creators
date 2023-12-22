@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import axios from 'axios';
 import { genIdeas } from './ideaGeneration';
+import { save, saveInitialIdeas } from '../db/misc';
 
 
 function wait(ms) {
@@ -18,6 +19,7 @@ export async function generateIdeas(company, number) {
         for (let i = 0; i < response.length; i++) {
             ideas[i] = response[i];
         }
+        saveInitialIdeas(response)
     })
     .catch((error) => {
         console.log(error);
