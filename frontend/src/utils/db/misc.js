@@ -1,234 +1,271 @@
-import {companySelectedStore} from '@/stores/company.js'
-import {companiesArrayStore} from '@/stores/companies.js'
-import {updateCompany} from '@/utils/db/companyModel.js'
-import { userStore } from '../../stores/user'
-import router from '@/router/index.js'
-import * as Realm from "realm-web";
-
+import { companySelectedStore } from '@/stores/company.js';
+import { companiesArrayStore } from '@/stores/companies.js';
+import { updateCompany } from '@/utils/db/companyModel.js';
+import { userStore } from '../../stores/user';
+import router from '@/router/index.js';
+import * as Realm from 'realm-web';
 
 export async function updateUser() {
   try {
     const {
-        BSON: { ObjectId },
-      } = Realm;
-    const userField = userStore()
+      BSON: { ObjectId },
+    } = Realm;
+    const userField = userStore();
     const app = new Realm.App({ id: 'application-0-qitnr' });
     const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials)
+    const user = await app.logIn(credentials);
     const filter = {
-      'user.email': userField.email
-    }
+      'user.email': userField.email,
+    };
     console.assert(user.id === app.currentUser.id);
-    const client = app.currentUser.mongoClient("mongodb-atlas");
+    const client = app.currentUser.mongoClient('mongodb-atlas');
     const options = { upsert: true };
     const updateDoc = {
       $set: {
-        "user": {
-          "email": userField.email,
-          "tier": userField.tier,
-          "date": userField.date,
-          "tokens": userField.tokens
-        }
-      }
+        user: {
+          email: userField.email,
+          tier: userField.tier,
+          date: userField.date,
+          tokens: userField.tokens,
+        },
+      },
     };
-    await client.db("companies").collection("users").updateOne(filter, updateDoc, options);
+    await client
+      .db('companies')
+      .collection('users')
+      .updateOne(filter, updateDoc, options);
   } catch (err) {
     console.log(err);
   }
 }
 
 export async function saveGoodIdea(idea) {
+  if (idea == '') {
+    return;
+  }
   try {
-    const companyStore = companySelectedStore()
+    const companyStore = companySelectedStore();
     const {
       BSON: { ObjectId },
     } = Realm;
     const app = new Realm.App({ id: 'application-0-qitnr' });
     const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials)
+    const user = await app.logIn(credentials);
     console.assert(user.id === app.currentUser.id);
-    const client = app.currentUser.mongoClient("mongodb-atlas");
+    const client = app.currentUser.mongoClient('mongodb-atlas');
 
-    const document =   {"idea": {
-      "date": formatDate(),
-      "company": companyStore.companySelected,
-      "idea": idea
-    }}
-    const result = await client.db("companies").collection("good-ideas").insertOne(document);
+    const document = {
+      idea: {
+        date: formatDate(),
+        company: companyStore.companySelected,
+        idea: idea,
+      },
+    };
+    const result = await client
+      .db('companies')
+      .collection('good-ideas')
+      .insertOne(document);
   } catch (err) {
     console.log(err);
   }
 }
 
-
 export async function saveInitialIdeas(ideas) {
   try {
-    const companyStore = companySelectedStore()
-    let document = {}
+    const companyStore = companySelectedStore();
+    let document = {};
     const {
       BSON: { ObjectId },
     } = Realm;
     const app = new Realm.App({ id: 'application-0-qitnr' });
     const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials)
+    const user = await app.logIn(credentials);
     console.assert(user.id === app.currentUser.id);
-    const client = app.currentUser.mongoClient("mongodb-atlas");
+    const client = app.currentUser.mongoClient('mongodb-atlas');
     let result = [];
 
     for (let i = 0; i < ideas.length; i++) {
-      document =   {"idea": {
-        "date": formatDate(),
-        "company": companyStore.companySelected,
-        "idea": ideas[i]
-      }}
-      result = await client.db("companies").collection("bad-ideas").insertOne(document);
+      if (ideas[i] == '') {
+        continue;
+      }
+      document = {
+        idea: {
+          date: formatDate(),
+          company: companyStore.companySelected,
+          idea: ideas[i],
+        },
+      };
+      result = await client
+        .db('companies')
+        .collection('bad-ideas')
+        .insertOne(document);
     }
   } catch (err) {
     console.log(err);
   }
 }
 
-
 export async function getUserTokens(email) {
   try {
-      const {
-          BSON: { ObjectId },
-        } = Realm;
-      const app = new Realm.App({ id: 'application-0-qitnr' });
-      const credentials = Realm.Credentials.anonymous();
-      const user = await app.logIn(credentials)
-      console.assert(user.id === app.currentUser.id);
-      const client = app.currentUser.mongoClient("mongodb-atlas");
-      const result = await client.db('companies').collection("users").find({'user.email': email});
+    const {
+      BSON: { ObjectId },
+    } = Realm;
+    const app = new Realm.App({ id: 'application-0-qitnr' });
+    const credentials = Realm.Credentials.anonymous();
+    const user = await app.logIn(credentials);
+    console.assert(user.id === app.currentUser.id);
+    const client = app.currentUser.mongoClient('mongodb-atlas');
+    const result = await client
+      .db('companies')
+      .collection('users')
+      .find({ 'user.email': email });
 
-      let last_monday = getPreviousMonday();
+    let last_monday = getPreviousMonday();
 
-      const userField = userStore()
+    const userField = userStore();
 
-      if (result.length > 0) {
-        userField.date = result[0].user.date;
-        userField.tokens = parseInt(result[0].user.tokens);
-        userField.tier = parseInt(result[0].user.tier);
+    if (result.length > 0) {
+      userField.date = result[0].user.date;
+      userField.tokens = parseInt(result[0].user.tokens);
+      userField.tier = parseInt(result[0].user.tier);
+      userField.role = result[0].user.role;
+      userField.companies = result[0].user.companies;
 
-        if (last_monday != result[0].user.date) {
-          const filter = {
-            'user.email': result[0].user.email
-          }
-          result[0].user.date = last_monday
+      if (last_monday != result[0].user.date) {
+        const filter = {
+          'user.email': result[0].user.email,
+        };
+        result[0].user.date = last_monday;
 
-          result[0].user.tokens = 30 + (30*userField.tier)
-          const options = { upsert: true };
-          const updateDoc = {
-            $set: result[0]
-          };
-          await client.db("companies").collection("users").updateOne(filter, updateDoc, options);
-        }
-        return result[0].user.tokens;
-      } else {
-        try {
-            const document = {"user": {
-              "email": email,
-              "tokens": 30,
-              "tier": 0,
-              "date": last_monday,
-            }}
-            const result = await client.db("companies").collection("users").insertOne(document);
-            return document.tokens;
-        } catch (e) {
-            console.error(e);
-        }
+        result[0].user.tokens = 30 + 30 * userField.tier;
+        const options = { upsert: true };
+        const updateDoc = {
+          $set: result[0],
+        };
+        await client
+          .db('companies')
+          .collection('users')
+          .updateOne(filter, updateDoc, options);
       }
+      return result[0].user.tokens;
+    } else {
+      try {
+        const document = {
+          user: {
+            email: email,
+            tokens: 30,
+            tier: 0,
+            date: last_monday,
+            role: 'planner',
+            companies: [],
+          },
+        };
+        const result = await client
+          .db('companies')
+          .collection('users')
+          .insertOne(document);
+        return document.tokens;
+      } catch (e) {
+        console.error(e);
+      }
+    }
   } catch (e) {
-      console.error(e);
+    console.error(e);
   }
 }
 
 export async function resetValues() {
-  const companiesStore = companiesArrayStore()
-  const companyStore = companySelectedStore()
-  await companyStore.$reset()
-  await companiesStore.$reset()
+  const companiesStore = companiesArrayStore();
+  const companyStore = companySelectedStore();
+  await companyStore.$reset();
+  await companiesStore.$reset();
   companiesStore.companiesArrayPromise.then((result) => {
-    result.forEach(company => {
-      companiesStore.companiesArray.push(company)
-    })
-  }) 
+    result.forEach((company) => {
+      companiesStore.companiesArray.push(company);
+    });
+  });
 }
 
 export function formatDate() {
   var d = new Date(),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
 
   return [year, month, day].join('-');
 }
 
 export async function cancelPlans() {
   resetValues().then(() => {
-    router.push({name: 'home'})
-  })
+    router.push({ name: 'home' });
+  });
 }
 export async function cancelCompanies() {
   resetValues().then(() => {
-    router.push({name: 'home'})
-  })
+    router.push({ name: 'home' });
+  });
 }
 export function save(deleting = false) {
-  const companyStore = companySelectedStore()
-  const filter = { 'company.name': companyStore.companySelectedObject['company']['name']}
+  const companyStore = companySelectedStore();
+  const filter = {
+    'company.name': companyStore.companySelectedObject['company']['name'],
+  };
   const options = { upsert: true };
 
   let up = false;
-  for (let i = 0; i < companyStore.companySelectedObject.company.plans.length; i++) {
-    if ((companyStore.companySelectedObject.company.plans[i].date == companyStore.planSelected) && (!deleting)) {
-      companyStore.companySelectedObject.company.plans[i] = companyStore.planSelectedObject
+  for (
+    let i = 0;
+    i < companyStore.companySelectedObject.company.plans.length;
+    i++
+  ) {
+    if (
+      companyStore.companySelectedObject.company.plans[i].date ==
+        companyStore.planSelected &&
+      !deleting
+    ) {
+      companyStore.companySelectedObject.company.plans[i] =
+        companyStore.planSelectedObject;
       up = true;
     }
   }
   if (!up && !deleting) {
-    companyStore.companySelectedObject.company.plans.push(companyStore.planSelectedObject)
+    companyStore.companySelectedObject.company.plans.push(
+      companyStore.planSelectedObject
+    );
   }
   // Specify the update to set a value for the plot field
   const updateDoc = {
     $set: {
-      company: companyStore.companySelectedObject.company
+      company: companyStore.companySelectedObject.company,
     },
   };
-  console.log(updateDoc)
-  updateCompany(filter, updateDoc, options)
-  .then(result => {
+
+  updateCompany(filter, updateDoc, options).then((result) => {
     resetValues().then(() => {
-      router.push({name: 'home'})
-    })
-  })
+      router.push({ name: 'home' });
+    });
+  });
 }
 
-
 export function getPreviousMonday() {
-    var date = new Date();
-    var day = date.getDay();
-    var prevMonday = new Date();
-    if(date.getDay() == 2){
-        prevMonday.setDate(date.getDate() - 7);
-    }
-    else{
-        prevMonday.setDate(date.getDate() - (day-1));
-    }
+  var date = new Date();
+  var day = date.getDay();
+  var prevMonday = new Date();
+  if (date.getDay() == 2) {
+    prevMonday.setDate(date.getDate() - 7);
+  } else {
+    prevMonday.setDate(date.getDate() - (day - 1));
+  }
 
-    let month = '' + (prevMonday.getMonth() + 1);
-    day = '' + prevMonday.getDate();
-    let year = prevMonday.getFullYear();
+  let month = '' + (prevMonday.getMonth() + 1);
+  day = '' + prevMonday.getDate();
+  let year = prevMonday.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
 
-    return [year, month, day].join('-');
+  return [year, month, day].join('-');
 }
