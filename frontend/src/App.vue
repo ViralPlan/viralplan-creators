@@ -1,11 +1,13 @@
 <script setup>
 import Sidebar from './components/App/Sidebar.vue';
 import { useRoute } from 'vue-router';
-import { getUserTokens, getPreviousMonday } from '@/utils/db/misc.js';
+import { getUserTokens } from '@/utils/db/misc.js';
 import router from './router/index.js';
 import { companySelectedStore } from './stores/company.js';
 import { companiesArrayStore } from './stores/companies.js';
 import { userStore } from './stores/user.js';
+import { usersStore } from './stores/users.js';
+import { getUser, getUsers, updateUser } from './utils/db/userModel.js';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { processInput } from '@/utils/plans/processInput.js';
 import { save, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
@@ -19,12 +21,33 @@ watch(isLoading, async (currentValue) => {
   if (!currentValue) {
     if (isAuthenticated.value) {
       const companiesStore = companiesArrayStore();
+      const users = usersStore();
       companiesStore.$reset();
       const onlineUser = user ? user.value : '';
 
       const localUser = userStore();
       localUser.email = onlineUser.email;
+
+      let tempUser = await getUser(localUser.email);
+
+      localUser.tier = tempUser.user.tier;
+      localUser.date = tempUser.user.date;
+      localUser.tokens = tempUser.user.tokens;
+      localUser.role =
+        typeof tempUser.user.role == 'undefined'
+          ? 'planner'
+          : tempUser.user.role;
+      localUser.companies =
+        typeof tempUser.user.companies == 'undefined'
+          ? []
+          : tempUser.user.companies;
+
       localUser.tokens = await getUserTokens(localUser.email);
+      // updateUser(localUser)
+
+      if (localUser.role == 'admin') {
+        users.users = await getUsers();
+      }
 
       companiesStore.companiesArrayPromise.then((result) => {
         result.forEach((company) => {

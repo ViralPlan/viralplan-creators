@@ -1,23 +1,23 @@
-import { fileURLToPath, URL } from 'node:url'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
-import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { defineConfig } from 'vite';
+import eslintPlugin from 'vite-plugin-eslint';
 import { splitVendorChunkPlugin } from 'vite';
 // import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
 // import vitePluginRequire from "vite-plugin-require";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
     fs: {
-      allow: [
-        '/'
-      ]
-    }
+      allow: ['/'],
+    },
   },
   plugins: [
     vue(),
     splitVendorChunkPlugin(),
+    // eslintPlugin(),
     // chunkSplitPlugin(),
     // vitePluginRequire(),
     nodePolyfills({
@@ -43,7 +43,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+});

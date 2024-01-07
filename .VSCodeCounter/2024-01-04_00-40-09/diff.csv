@@ -1,0 +1,14 @@
+"filename", "language", "JavaScript", "vue", "comment", "blank", "total"
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\App.vue", "vue", 0, 4, 0, 1, 5
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\assets\taskList.js", "JavaScript", 542, 0, 4, 53, 599
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\PopupModal.vue", "vue", 0, 61, 0, 3, 64
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\stores\users.js", "JavaScript", -1, 0, 0, 0, -1
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\dates.js", "JavaScript", 41, 0, 3, 11, 55
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\companyModel.js", "JavaScript", 29, 0, 0, 1, 30
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\misc.js", "JavaScript", -12, 0, 0, -6, -18
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\userModel.js", "JavaScript", 20, 0, 0, 2, 22
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\plans\plan_5.js", "JavaScript", 1, 0, 0, 1, 2
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\Companies\CompaniesCreatorView.vue", "vue", 0, 2, 0, -3, -1
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\Companies\CompaniesEditorView.vue", "vue", 0, 2, 0, 0, 2
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\HomeView.vue", "vue", 0, 52, 0, 2, 54
+"Total", "-", 620, 121, 7, 65, 813

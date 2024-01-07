@@ -2,8 +2,10 @@ import { companySelectedStore } from '@/stores/company.js';
 import { companiesArrayStore } from '@/stores/companies.js';
 import { updateCompany } from '@/utils/db/companyModel.js';
 import { userStore } from '../../stores/user';
+import { getPreviousMonday } from '@/utils/dates.js';
 import router from '@/router/index.js';
 import * as Realm from 'realm-web';
+import { formatDate } from '@/utils/dates.js';
 
 export async function updateUser() {
   try {
@@ -128,8 +130,14 @@ export async function getUserTokens(email) {
       userField.date = result[0].user.date;
       userField.tokens = parseInt(result[0].user.tokens);
       userField.tier = parseInt(result[0].user.tier);
-      userField.role = result[0].user.role;
-      userField.companies = result[0].user.companies;
+      userField.role =
+        typeof result[0].user.role == 'undefined'
+          ? 'planner'
+          : result[0].user.role;
+      userField.companies =
+        typeof result[0].user.companies == 'undefined'
+          ? []
+          : result[0].user.companies;
 
       if (last_monday != result[0].user.date) {
         const filter = {
@@ -186,18 +194,6 @@ export async function resetValues() {
   });
 }
 
-export function formatDate() {
-  var d = new Date(),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
-}
-
 export async function cancelPlans() {
   resetValues().then(() => {
     router.push({ name: 'home' });
@@ -250,22 +246,10 @@ export function save(deleting = false) {
   });
 }
 
-export function getPreviousMonday() {
-  var date = new Date();
-  var day = date.getDay();
-  var prevMonday = new Date();
-  if (date.getDay() == 2) {
-    prevMonday.setDate(date.getDate() - 7);
-  } else {
-    prevMonday.setDate(date.getDate() - (day - 1));
+export function inArray(needle, haystack) {
+  for (var i = 0; i < haystack.length; i++) {
+    if (haystack[i] == needle) return true;
   }
-
-  let month = '' + (prevMonday.getMonth() + 1);
-  day = '' + prevMonday.getDate();
-  let year = prevMonday.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
 }
+
+

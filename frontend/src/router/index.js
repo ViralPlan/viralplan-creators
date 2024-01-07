@@ -1,15 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { authGuard } from "@auth0/auth0-vue";
-import HomeView from '../views/HomeView.vue'
-import CompaniesView from '../views/Companies/CompaniesView.vue'
-import CompaniesEditorView from '../views/Companies/CompaniesEditorView.vue'
-import CompaniesCreatorView from '../views/Companies/CompaniesCreatorView.vue'
-import CompaniesEraserView from '../views/Companies/CompaniesEraserView.vue'
-import PlansView from '../views/Plans/PlansView.vue'
-import PlansEditorView from '../views/Plans/PlansEditorView.vue'
-import PlansCreatorView from '../views/Plans/PlansCreatorView.vue'
-import PlansEraserView from '../views/Plans/PlansEraserView.vue'
-
+import { createRouter, createWebHistory } from 'vue-router';
+import { authGuard } from '@auth0/auth0-vue';
+import HomeView from '../views/HomeView.vue';
+import CompaniesView from '../views/Companies/CompaniesView.vue';
+import CompaniesEditorView from '../views/Companies/CompaniesEditorView.vue';
+import CompaniesCreatorView from '../views/Companies/CompaniesCreatorView.vue';
+import CompaniesEraserView from '../views/Companies/CompaniesEraserView.vue';
+import PlansView from '../views/Plans/PlansView.vue';
+import PlansEditorView from '../views/Plans/PlansEditorView.vue';
+import PlansCreatorView from '../views/Plans/PlansCreatorView.vue';
+import PlansEraserView from '../views/Plans/PlansEraserView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,8 +66,8 @@ const router = createRouter({
       name: 'plans-eraser',
       component: PlansEraserView,
       beforeEnter: authGuard,
-    }
-  ]
-})
+    },
+  ],
+});
 
-export default router
+export default router;
