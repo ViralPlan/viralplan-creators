@@ -112,8 +112,7 @@ function postponeTask() {
     if (company.company.name == props.company) {
       for (let i = 0; i < company.company.tasks.length; i++) {
         if (company.company.tasks[i].title == props.titulo) {
-          fecha = getNextBusinessDay(props.fecha);
-          company.company.tasks[i].date = fecha;
+          company.company.tasks[i].date = getNextBusinessDay(props.fecha);
           company.company.tasks[i].status = 'postponed';
           break;
         }
@@ -149,9 +148,9 @@ function showModal() {
 }
 </script>
 
-<style>
+<style scoped>
 .retrasado {
-  background-color: #ff0000 !important;
+  background-color: #ff004d !important;
   color: white !important;
 }
 .hoy {

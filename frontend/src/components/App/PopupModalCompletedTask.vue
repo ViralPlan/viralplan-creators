@@ -94,17 +94,17 @@ function showModal() {
 }
 </script>
 
-<style>
+<style scoped>
 .retrasado {
-  background-color: #ff0000 !important;
-  color: white !important;
+  background-color: #00ff04 !important;
+  color: black !important;
 }
 .hoy {
-  background-color: #ff004d !important;
-  color: white !important;
+  background-color: #00ff04 !important;
+  color: black !important;
 }
 .pospuestas {
-  background-color: #ff004d !important;
-  color: white !important;
+  background-color: #00ff04 !important;
+  color: black !important;
 }
 </style>

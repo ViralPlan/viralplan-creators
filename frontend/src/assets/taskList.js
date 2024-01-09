@@ -3,7 +3,7 @@ import { getNextMonday, getNextBusinessDay } from '@/utils/dates.js';
 export function getInitialTask(company, plan) {
   const taskList = [
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Asignación de un nuevo cliente',
       description: `
 
@@ -130,7 +130,7 @@ Nuestro compromiso es asegurar el éxito continuo de tu marca con ViralPlan. Est
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(initialDate),
       title: 'Reunión de formulario',
       description: `
 Comienza preparando el primer contacto con ${company}.
@@ -173,7 +173,7 @@ Grabación y Privacidad:
   ● Informa previamente al cliente sobre la grabación para su consentimiento.`,
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Documentación Post-Reunión',
       description: `
 Introduce en CRM Ficha de Cliente toda la información recabada durante la reunión Primer contacto de [Nombre del Cliente] tras la reunión.
@@ -184,7 +184,7 @@ Es esencial asegurarse de que toda la información y documentación presentada e
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Desarrollo de ideas creativas',
       description: `
 Inicia el desarrollo de ideas creativas para el plan de [Nombre del Cliente]. Consulta esta guía de creación de contenido:
@@ -568,7 +568,7 @@ Saludos,
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Análisis de Insights',
       description: `
 Analiza los insights obtenidos a través de la encuesta de satisfacción u otras vías y déjalos anotados en la ficha de cliente mejoras para el siguiente ciclo.`,
@@ -589,28 +589,28 @@ Si hay algún detalle o necesitas más tiempo, estamos aquí para apoyarte. Tu s
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Actualización del calendario de eventos',
       description: `
 Actualiza tu calendario de eventos y la planificación para el próximo mes en Google Calendar. Recuerda anotarte todos los eventos con suficientes días de margen para que se pueda crear, guionizar, grabar, editar y publicar el contenido a tiempo.`,
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Actualización de Documentos y Registros',
       description: `
 Revisa y actualiza toda la documentación y registros relacionados con ${company}, sobre todo la ficha CRM.`,
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Revisión de cargas de trabajo',
       description: `
 Realiza una revisión exhaustiva de las cargas de trabajo y considera asignaciones flexibles en caso de que sea necesario. Si es así, comunícate con tu jefe de equipo y exponle tu situación de la manera más detallada posible.`,
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'Revisión final y cierre del mes',
       description: `
 Realiza una revisión final y cierra el mes. Consulta esta lista de verificación:
@@ -618,7 +618,7 @@ Realiza una revisión final y cierra el mes. Consulta esta lista de verificació
       status: 'unfulfilled',
     },
     {
-      date: '',
+      date: getNextBusinessDay(),
       title: 'El cliente ha pagado el próximo mes',
       description: `
 Si el cliente ha pagado ya el próximo mes, marcar esta tarea como realizada para que el software de inicio al nuevo periodo de producción de tareas. Importante, solo SI YA HA PAGADO.
