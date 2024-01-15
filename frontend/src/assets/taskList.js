@@ -1,5 +1,13 @@
 import { getNextMonday, getNextBusinessDay } from '@/utils/dates.js';
 
+const groupImage = 'https://bit.ly/3vjZvsV'
+const meetingQuestions = 'https://bit.ly/3vD3Mbe'
+const contentCreationGuide = 'https://bit.ly/3RVz6tb'
+const itProtocol = 'https://bit.ly/3O2eT3O'
+const surveyTemplate = 'https://bit.ly/3vBkiIK'
+const planner = 'https://bit.ly/48VhSDg'
+const endOfMonthChecklist = 'https://bit.ly/48yisHa '
+
 export function getInitialTask(company, plan) {
   const taskList = [
     {
@@ -108,7 +116,7 @@ Maximiza tu impacto en marketing con acceso directo a nuestros recursos y equipo
 Nuestro compromiso es asegurar el éxito continuo de tu marca con ViralPlan. Estamos aquí para apoyarte en cada paso de tu camino hacia el éxito.]
 
 - Imagen del Grupo:
- [https://bit.ly/3vjZvsV + Insertar logotipo de la empresa en color blanco]
+ [${groupImage} + Insertar logotipo de la empresa en color blanco]
 
 - Guía de mensajes:
  Hola [Nombre del Cliente] y equipo,
@@ -140,7 +148,7 @@ Organización de la Reunión:
   ● Programa una videollamada o reunión con ${company} para discutir aspectos clave.
 
   ● Utiliza esta lista de preguntas esenciales para guiar la conversación:
-  [Enlace a Lista de Preguntas].
+  [${meetingQuestions}].
 
 Agendamiento y Invitación:
 
@@ -176,7 +184,7 @@ Grabación y Privacidad:
       date: getNextBusinessDay(),
       title: 'Documentación Post-Reunión',
       description: `
-Introduce en CRM Ficha de Cliente toda la información recabada durante la reunión Primer contacto de [Nombre del Cliente] tras la reunión.
+Introduce en CRM Ficha de Cliente toda la información recabada durante la reunión Primer contacto de ${company} tras la reunión.
 
 Descarga y adjunta también todas las grabaciones, transcripciones y resúmenes obtenidos durante la misma.
 
@@ -188,7 +196,7 @@ Es esencial asegurarse de que toda la información y documentación presentada e
       title: 'Desarrollo de ideas creativas',
       description: `
 Inicia el desarrollo de ideas creativas para el plan de [Nombre del Cliente]. Consulta esta guía de creación de contenido:
-[Enlace a Guía].`,
+${contentCreationGuide}.`,
       status: 'unfulfilled',
     },
   ];
@@ -233,7 +241,7 @@ Comunicación Proactiva:
         description: `
   Hoy es la entrega de la primera mitad de tus ideas creativas. Asegúrate de que estén
 bien documentadas en este formato:
-[Enlace a Formato].`,
+${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
       {
@@ -241,7 +249,7 @@ bien documentadas en este formato:
         title: 'Reunión Departamento de IT',
         description: `
   Asiste a la reunión interna organizada con el departamento de IT. Sigue este protocolo:
-[Enlace al Protocolo de IT].
+${itProtocol}.
         `,
         status: 'unfulfilled',
       },
@@ -264,8 +272,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
-Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo. Además, consulta estos consejos para optimizar tu trabajo:
-[Enlace a Consejos].
+Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio.`,
       },
@@ -295,15 +302,14 @@ Comunicación Proactiva:
         title: 'Entrega de la segunda mitad de ideas',
         description: `
   Hoy es la entrega de la segunda mitad de tus ideas creativas. Asegúrate de que estén bien documentadas en este formato:
-[Enlace a Formato].`,
+${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
       {
         date: firstMonday,
         title: 'Reunión Departamento de Creación',
         description: `
-  Asiste a la reunión interna organizada con el departamento de Creación. Sigue este protocolo:
-[Enlace al Protocolo de IT]`,
+  Asiste a la reunión interna organizada con el departamento de Creación.`,
         status: 'unfulfilled',
       },
       {
@@ -323,8 +329,7 @@ Como Planner, eres el principal responsable de la atención al cliente. Es cruci
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
-Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo. Además, consulta estos consejos para optimizar tu trabajo:
-[Enlace a Consejos].
+Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
         status: 'unfulfilled',
@@ -369,8 +374,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
-Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo. Además, consulta estos consejos para optimizar tu trabajo:
-[Enlace a Consejos].
+Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
         status: 'unfulfilled',
@@ -388,8 +392,7 @@ Realiza todos los ajustes necesarios en tus ideas y comienza a trabajar en ellos
         date: firstMonday,
         title: 'Aprobación e inicio de la redacción',
         description: `
-  Una vez cuentes con la aprobación de tus ideas, inicia la redacción del plan detallado. Sigue todas las directrices y formatos:
-[Enlace a Directrices]`,
+  Una vez cuentes con la aprobación de tus ideas, inicia la redacción del plan detallado.`,
         status: 'unfulfilled',
       },
     ];
@@ -417,8 +420,7 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Finalización del Plan Detallado',
         description: `
-  Finaliza la redacción del plan detallado. Una vez finalizado, súbelo a la carpeta de drive correspondiente: Sigue todas las directrices y formatos:
-[Enlace a Directrices]`,
+  Finaliza la redacción del plan detallado. Una vez finalizado, súbelo a la carpeta de drive correspondiente.`,
         status: 'unfulfilled',
       },
       {
@@ -440,8 +442,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
-Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo. Además, consulta estos consejos para optimizar tu trabajo:
-[Enlace a Consejos].
+Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
         status: 'unfulfilled',
@@ -509,8 +510,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
-Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo. Además, consulta estos consejos para optimizar tu trabajo:
-[Enlace a Consejos].
+Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
         status: 'unfulfilled',
@@ -520,7 +520,7 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         title: 'Desarrollo de ideas creativas',
         description: `
   Inicia el desarrollo de ideas creativas para el plan de ${company}. Consulta esta guía de creación de contenido:
-[Enlace a Guía].`,
+${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
     ];
@@ -537,8 +537,8 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
       date: firstMonday,
       title: 'Distribución de encuesta de satisfacción',
       description: `
-Distribuye la encuesta de satisfacción a [Nombre del Cliente]. Utiliza este modelo:
-[Enlace a Modelo de Encuesta]`,
+Distribuye la encuesta de satisfacción a ${company}. Utiliza este modelo:
+${surveyTemplate}.`,
       status: 'unfulfilled',
     },
     {
@@ -546,7 +546,7 @@ Distribuye la encuesta de satisfacción a [Nombre del Cliente]. Utiliza este mod
       title: 'Reunión de Revisión Interna',
       description: `
 Propón al cliente que si es necesario podemos realizar una reunión de revisión con ${company} y el Jefe de equipo para evaluar el servicio recibido durante el mes. Aquí tienes una agenda:
-[Enlace a Agenda]`,
+${planner}.`,
       status: 'unfulfilled',
     },
     {
@@ -614,7 +614,7 @@ Realiza una revisión exhaustiva de las cargas de trabajo y considera asignacion
       title: 'Revisión final y cierre del mes',
       description: `
 Realiza una revisión final y cierra el mes. Consulta esta lista de verificación:
-[Enlace a Lista de Verificación]`,
+${endOfMonthChecklist}`,
       status: 'unfulfilled',
     },
     {
