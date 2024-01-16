@@ -3,7 +3,7 @@
     <h1 class="text-4xl mb-4"><strong>ViralPlan Creators</strong></h1>
     <div v-if="user.role != 'admin'">
       <h2 class="text-white text-2xl"><strong>Tus tareas</strong></h2>
-      <div class="w-full h-4 mt-2 text-white flex flex-row">
+      <div class="w-full h-4 mt-2 text-white flex flex-row" v-if="user.companies.length > 0">
         <span
           :class="{ selected: selectedTab == company, always: true }"
           v-for="company in user.companies"

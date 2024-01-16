@@ -13,6 +13,14 @@ export async function getUsers() {
     const client = app.currentUser.mongoClient('mongodb-atlas');
     const result = await client.db('companies').collection('users').find({});
 
+    result.forEach(user => {
+      if (typeof user.user.companies == 'undefined') {
+        user.user.companies = [];
+        user.user.role = 'planner';
+        updateUser(user.user);
+      }
+    });
+
     return result;
   } catch (e) {
     console.error(e);

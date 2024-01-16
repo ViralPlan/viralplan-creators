@@ -51,7 +51,11 @@ watch(isLoading, async (currentValue) => {
 
       companiesStore.companiesArrayPromise.then((result) => {
         result.forEach((company) => {
-          companiesStore.companiesArray.push(company);
+          if (localUser.companies.includes(company.company.name) && localUser.role != 'admin') {
+            companiesStore.companiesArray.push(company);
+          } else if (localUser.role == 'admin') {
+            companiesStore.companiesArray.push(company);
+          }
         });
       });
     }
