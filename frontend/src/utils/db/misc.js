@@ -22,6 +22,14 @@ export async function updateUser() {
     console.assert(user.id === app.currentUser.id);
     const client = app.currentUser.mongoClient('mongodb-atlas');
     const options = { upsert: true };
+    userField.role =
+      typeof userField.role == 'undefined'
+        ? 'planner'
+        : userField.role;
+    userField.companies =
+      typeof userField.companies == 'undefined'
+        ? []
+        : userField.companies;
     const updateDoc = {
       $set: {
         user: {
@@ -29,6 +37,8 @@ export async function updateUser() {
           tier: userField.tier,
           date: userField.date,
           tokens: userField.tokens,
+          role: userField.role,
+          companies: userField.companies,
         },
       },
     };
