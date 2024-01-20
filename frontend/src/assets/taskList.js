@@ -524,6 +524,18 @@ ${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
     ];
+    if (i == 1 || i == 3) {
+      let addedTask = [
+        {
+          date: firstMonday,
+          title: 'Comunicación del último plan entregado',
+          description: `
+Comunica a los socios y jefe de equipo la entrega del plan de esta semana de ${company}`,
+          status: 'unfulfilled',
+        },
+      ]
+      friday = friday.concat(addedTask);
+    }
 
     taskList = taskList.concat(monday, tuesday, wednesday, thursday, friday);
     if (i != 3) {
