@@ -52,7 +52,7 @@
       >
         <div v-for="company in companiesStore.companiesArray">
           <PopupModalCompletedTask
-            v-for="companyTask in company.company.completedTasks"
+            v-for="companyTask in company.company.completedTasks.slice().reverse()"
             v-if="
               inArray(company.company.name, user.companies) &&
               selectedTab == company.company.name &&
@@ -135,6 +135,26 @@
           Desasignar compañía
         </button>
       </div>
+      <h2 class="text-white text-2xl mt-2"><strong>Preguntas respondidas</strong></h2>
+      <div
+        class="w-full pb-6 px-6 mt-3 mb-0"
+        style="
+          height: 70vh;
+          border-radius: 8px;
+          background-color: #808080;
+          justify-content: space-between;
+          overflow-x: hidden !important;
+        "
+      >
+        <PopupModalForm
+          v-for="form in formsStore.formsArray.slice().reverse()"
+          v-if="rerenderer"
+          :fecha="form.form.date"
+          :company="form.form.company"
+          :formVariables="form.form.form"
+        />
+      </div>
+      <h2 class="text-white text-2xl mt-2"><strong>Tareas atrasadas</strong></h2>
       <div
         class="w-full pb-6 px-6 mt-3 mb-0"
         style="
@@ -146,7 +166,7 @@
         "
       >
         <PopupModal
-          v-for="companyTask in lateTasks"
+          v-for="companyTask in lateTasks.slice().reverse()"
           v-if="rerenderer"
           :titulo="companyTask.title + ' - ' + companyTask.company"
           :descripcion="companyTask.description"
@@ -166,10 +186,12 @@ import { updateCompanyTasks } from '@/utils/db/companyModel.js';
 import { getFirstTaskList } from '@/assets/taskList.js';
 import { updateUser } from '../utils/db/userModel.js';
 import PopupModal from '../components/App/PopupModal.vue';
+import PopupModalForm from '../components/App/PopupModalForm.vue';
 import PopupModalCompletedTask from '../components/App/PopupModalCompletedTask.vue';
 import { userStore } from '@/stores/user.js';
 import { usersStore } from '../stores/users';
 import { companiesArrayStore } from '../stores/companies';
+import { formsArrayStore } from '../stores/forms';
 import { inArray } from '@/utils/db/misc.js';
 import {
   CDropdown,
@@ -179,6 +201,7 @@ import {
 } from '@coreui/vue';
 
 const companiesStore = companiesArrayStore();
+const formsStore = formsArrayStore();
 const user = userStore();
 const users = usersStore();
 let userSelected = ref('');

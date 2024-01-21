@@ -222,7 +222,7 @@ export function getSecondTaskList(company, initialDate) {
         date: firstMonday,
         title: 'Revisión de calendario y Creación de contenido temático',
         description: `
-  Revisa tu Calendario de Trabajo:
+Revisa tu Calendario de Trabajo:
 ● Asegúrate de estar al tanto de todas tus reuniones y compromisos programados para el día.
 ● Confirma las horas y plataformas para cada reunión.
 
@@ -239,7 +239,7 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Entrega de ideas creativas grupo n1',
         description: `
-  Hoy es la entrega de la primera mitad de tus ideas creativas. Asegúrate de que estén
+Hoy es la entrega de la primera mitad de tus ideas creativas. Asegúrate de que estén
 bien documentadas en este formato:
 ${contentCreationGuide}.`,
         status: 'unfulfilled',
@@ -248,7 +248,7 @@ ${contentCreationGuide}.`,
         date: firstMonday,
         title: 'Reunión Departamento de IT',
         description: `
-  Asiste a la reunión interna organizada con el departamento de IT. Sigue este protocolo:
+Asiste a la reunión interna organizada con el departamento de IT. Sigue este protocolo:
 ${itProtocol}.
         `,
         status: 'unfulfilled',
@@ -257,7 +257,7 @@ ${itProtocol}.
         date: firstMonday,
         title: 'Revisión de comunicaciones',
         description: `
-  Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
+Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
 
 Como Planner, eres el principal responsable de la atención al cliente. Es crucial que respondas siempre a las consultas de los clientes. Si te encuentras con una pregunta a la que no sabes cómo responder, contacta urgentemente con tu Jefe de Equipo.
 
@@ -268,13 +268,19 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
         date: firstMonday,
         title: 'Revisión del último contenido publicado',
         description: `
-  Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
+Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
 Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio.`,
+      },
+      {
+        date: firstMonday,
+        title: 'Formulario de Feedback Diario',
+        description: `Respuestas del formulario de feedback diario.`,
+        status: 'unfulfilled',
       },
     ];
     firstMonday = getNextBusinessDay(firstMonday);
@@ -284,7 +290,7 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         date: firstMonday,
         title: 'Revisión de calendario y Creación de contenido temático',
         description: `
-  Revisa tu Calendario de Trabajo:
+Revisa tu Calendario de Trabajo:
 ● Asegúrate de estar al tanto de todas tus reuniones y compromisos programados para el día.
 ● Confirma las horas y plataformas para cada reunión.
 
@@ -301,7 +307,7 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Entrega de la segunda mitad de ideas',
         description: `
-  Hoy es la entrega de la segunda mitad de tus ideas creativas. Asegúrate de que estén bien documentadas en este formato:
+Hoy es la entrega de la segunda mitad de tus ideas creativas. Asegúrate de que estén bien documentadas en este formato:
 ${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
@@ -309,14 +315,14 @@ ${contentCreationGuide}.`,
         date: firstMonday,
         title: 'Reunión Departamento de Creación',
         description: `
-  Asiste a la reunión interna organizada con el departamento de Creación.`,
+Asiste a la reunión interna organizada con el departamento de Creación.`,
         status: 'unfulfilled',
       },
       {
         date: firstMonday,
         title: 'Revisión de comunicaciones',
         description: `
-  Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
+Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
 
 Como Planner, eres el principal responsable de la atención al cliente. Es crucial que respondas siempre a las consultas de los clientes. Si te encuentras con una pregunta a la que no sabes cómo responder, contacta urgentemente con tu Jefe de Equipo. Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24 horas durante los días laborables, asegurando un servicio al cliente eficiente y responsable.`,
         status: 'unfulfilled',
@@ -325,13 +331,19 @@ Como Planner, eres el principal responsable de la atención al cliente. Es cruci
         date: firstMonday,
         title: 'Revisión del último contenido publicado',
         description: `
-  Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
+Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
 Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
+        status: 'unfulfilled',
+      },
+      {
+        date: firstMonday,
+        title: 'Formulario de Feedback Diario',
+        description: `Respuestas del formulario de feedback diario.`,
         status: 'unfulfilled',
       },
     ];
@@ -342,7 +354,7 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         date: firstMonday,
         title: 'Revisión de calendario y Creación de contenido temático',
         description: `
-  Revisa tu Calendario de Trabajo:
+Revisa tu Calendario de Trabajo:
  ● Asegúrate de estar al tanto de todas tus reuniones y compromisos programados para el día.
  ● Confirma las horas y plataformas para cada reunión.
 
@@ -359,7 +371,7 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Revisión de comunicaciones',
         description: `
-  Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
+Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
 
 Como Planner, eres el principal responsable de la atención al cliente. Es crucial que respondas siempre a las consultas de los clientes. Si te encuentras con una pregunta a la que no sabes cómo responder, contacta urgentemente con tu Jefe de Equipo.
 
@@ -370,7 +382,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
         date: firstMonday,
         title: 'Revisión del último contenido publicado',
         description: `
-  Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
+Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
@@ -383,7 +395,7 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         date: firstMonday,
         title: 'Revisión de ideas con Jefes de Equipo',
         description: `
-  Revisa todas las anotaciones hechas por el jefe de equipo de las ideas presentadas esta semana.
+Revisa todas las anotaciones hechas por el jefe de equipo de las ideas presentadas esta semana.
 
 Realiza todos los ajustes necesarios en tus ideas y comienza a trabajar en ellos. Vuelve a presentarlas todas una vez corregidas, y notifica al jefe de equipo de que ya puede volverlas a revisar (Repite este proceso hasta que cuentes con la aprobación de todas las ideas que debes de presentar esta semana por parte del jefe de equipo).`,
         status: 'unfulfilled',
@@ -392,7 +404,13 @@ Realiza todos los ajustes necesarios en tus ideas y comienza a trabajar en ellos
         date: firstMonday,
         title: 'Aprobación e inicio de la redacción',
         description: `
-  Una vez cuentes con la aprobación de tus ideas, inicia la redacción del plan detallado.`,
+Una vez cuentes con la aprobación de tus ideas, inicia la redacción del plan detallado.`,
+        status: 'unfulfilled',
+      },
+      {
+        date: firstMonday,
+        title: 'Formulario de Feedback Diario',
+        description: `Respuestas del formulario de feedback diario.`,
         status: 'unfulfilled',
       },
     ];
@@ -403,7 +421,7 @@ Realiza todos los ajustes necesarios en tus ideas y comienza a trabajar en ellos
         date: firstMonday,
         title: 'Revisión de calendario y Creación de contenido temático',
         description: `
-  Revisa tu Calendario de Trabajo:
+Revisa tu Calendario de Trabajo:
 ● Asegúrate de estar al tanto de todas tus reuniones y compromisos programados para el día.
 ● Confirma las horas y plataformas para cada reunión.
 
@@ -420,14 +438,14 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Finalización del Plan Detallado',
         description: `
-  Finaliza la redacción del plan detallado. Una vez finalizado, súbelo a la carpeta de drive correspondiente.`,
+Finaliza la redacción del plan detallado. Una vez finalizado, súbelo a la carpeta de drive correspondiente.`,
         status: 'unfulfilled',
       },
       {
         date: firstMonday,
         title: 'Revisión de comunicaciones',
         description: `
-  Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
+Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
 
 Como Planner, eres el principal responsable de la atención al cliente. Es crucial que respondas siempre a las consultas de los clientes. Si te encuentras con una pregunta a la que no sabes cómo responder, contacta urgentemente con tu Jefe de Equipo.
 
@@ -438,13 +456,19 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
         date: firstMonday,
         title: 'Revisión del último contenido publicado',
         description: `
-  Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
+Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
 Si detectas algún error, comunícate urgentemente con el cliente para rectificarlo.
 
 Tu enfoque proactivo y atención al detalle son esenciales para mantener la excelencia en nuestro servicio`,
+        status: 'unfulfilled',
+      },
+      {
+        date: firstMonday,
+        title: 'Formulario de Feedback Diario',
+        description: `Respuestas del formulario de feedback diario.`,
         status: 'unfulfilled',
       },
     ];
@@ -455,7 +479,7 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         date: firstMonday,
         title: 'Entrega del Plan',
         description: `
-  Entrega el plan a ${company} entre las 8:00 y 10:00 AM siguiendo este procedimiento:
+Entrega el plan a ${company} entre las 8:00 y 10:00 AM siguiendo este procedimiento:
 
 Preparación del Plan:
  ● Revisa y asegúrate de que el plan esté completo y cumpla con todos los requisitos y estándares de calidad.
@@ -478,7 +502,7 @@ Seguimiento:
         date: firstMonday,
         title: 'Revisión de calendario y Creación de contenido temático',
         description: `
-  Revisa tu Calendario de Trabajo:
+Revisa tu Calendario de Trabajo:
  ● Asegúrate de estar al tanto de todas tus reuniones y compromisos programados para el día.
  ● Confirma las horas y plataformas para cada reunión.
 
@@ -495,7 +519,7 @@ Comunicación Proactiva:
         date: firstMonday,
         title: 'Revisión de comunicaciones',
         description: `
-  Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
+Revisa todas las vías de comunicación con ${company} y responde a cualquier consulta pendiente.
 
 Como Planner, eres el principal responsable de la atención al cliente. Es crucial que respondas siempre a las consultas de los clientes. Si te encuentras con una pregunta a la que no sabes cómo responder, contacta urgentemente con tu Jefe de Equipo.
 
@@ -506,7 +530,7 @@ Nuestro compromiso es ofrecer una respuesta al cliente en un plazo máximo de 24
         date: firstMonday,
         title: 'Revisión del último contenido publicado',
         description: `
-  Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
+Revisa todas las redes sociales de ${company} para comprobar que el contenido se publica exitosamente y cumple con los altos estándares de calidad de nuestros servicios.
 
 Recuerda, como Planner, tu tarea principal es crear contenido de calidad excepcional con potencial viral.
 
@@ -519,11 +543,19 @@ Tu enfoque proactivo y atención al detalle son esenciales para mantener la exce
         date: firstMonday,
         title: 'Desarrollo de ideas creativas',
         description: `
-  Inicia el desarrollo de ideas creativas para el plan de ${company}. Consulta esta guía de creación de contenido:
+Inicia el desarrollo de ideas creativas para el plan de ${company}. Consulta esta guía de creación de contenido:
 ${contentCreationGuide}.`,
         status: 'unfulfilled',
       },
+      {
+        date: firstMonday,
+        title: 'Formulario de Feedback Diario',
+        description: `Respuestas del formulario de feedback diario.`,
+        status: 'unfulfilled',
+      },
     ];
+
+    // Added the 2 and 4 week tasks
     if (i == 1 || i == 3) {
       let addedTask = [
         {

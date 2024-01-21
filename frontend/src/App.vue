@@ -5,6 +5,7 @@ import { getUserTokens } from '@/utils/db/misc.js';
 import router from './router/index.js';
 import { companySelectedStore } from './stores/company.js';
 import { companiesArrayStore } from './stores/companies.js';
+import { formsArrayStore } from './stores/forms.js';
 import { userStore } from './stores/user.js';
 import { usersStore } from './stores/users.js';
 import { getUser, getUsers, updateUser } from './utils/db/userModel.js';
@@ -21,8 +22,10 @@ watch(isLoading, async (currentValue) => {
   if (!currentValue) {
     if (isAuthenticated.value) {
       const companiesStore = companiesArrayStore();
+      const formsStore = formsArrayStore();
       const users = usersStore();
       companiesStore.$reset();
+      formsStore.$reset();
       const onlineUser = user ? user.value : '';
 
       const localUser = userStore();
@@ -47,6 +50,11 @@ watch(isLoading, async (currentValue) => {
 
       if (localUser.role == 'admin') {
         users.users = await getUsers();
+        formsStore.formsArrayPromise.then((result) => {
+          result.forEach((form) => {
+            formsStore.formsArray.push(form);
+          });
+        });
       }
 
       companiesStore.companiesArrayPromise.then((result) => {
