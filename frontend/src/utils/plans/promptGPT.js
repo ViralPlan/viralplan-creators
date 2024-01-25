@@ -88,7 +88,7 @@ export async function generateVideo(idea, company) {
       planos: {
         type: 'array',
         description:
-          ' Cadena de texto donde se define, para cada plano: tiempos de cada plano, con este formato "mm:ss - Definicion del plano", acting de cada persona en el plano, dialogos/voz en off en cada plano, tono a transmitir en cada plano. ',
+          ' Cadena de texto donde se define, para cada plano: tiempos de cada plano, con este formato "mm:ss - DefAinicion del plano", acting de cada persona en el plano, dialogos/voz en off en cada plano, tono a transmitir en cada plano. ',
         items: { type: 'string' },
       },
       texto: {

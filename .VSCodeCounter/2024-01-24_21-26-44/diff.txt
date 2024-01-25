@@ -1,0 +1,51 @@
+Date : 2024-01-24 21:26:44
+Directory : c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src
+Total : 14 files,  949 codes, 19 comments, 51 blanks, all 1019 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| vue        |          7 |        979 |         18 |         34 |      1,031 |
+| JavaScript |          7 |        -30 |          1 |         17 |        -12 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                 | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                    |         14 |        949 |         19 |         51 |      1,019 |
+| . (Files)                                                                                                            |          1 |         12 |          0 |          0 |         12 |
+| assets                                                                                                               |          1 |       -129 |          1 |          5 |       -123 |
+| components                                                                                                           |          4 |        870 |         18 |         32 |        920 |
+| components (Files)                                                                                                   |          1 |         10 |          0 |          0 |         10 |
+| components\App                                                                                                       |          3 |        860 |         18 |         32 |        910 |
+| stores                                                                                                               |          2 |          9 |          0 |          1 |         10 |
+| utils                                                                                                                |          4 |         90 |          0 |         11 |        101 |
+| utils (Files)                                                                                                        |          1 |         11 |          0 |          5 |         16 |
+| utils\db                                                                                                             |          3 |         79 |          0 |          6 |         85 |
+| views                                                                                                                |          2 |         97 |          0 |          2 |         99 |
+| views (Files)                                                                                                        |          1 |         95 |          0 |          2 |         97 |
+| views\Companies                                                                                                      |          1 |          2 |          0 |          0 |          2 |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                             | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\App.vue                                    | vue        |         12 |          0 |          0 |         12 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\assets\taskList.js                         | JavaScript |       -129 |          1 |          5 |       -123 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\PopupModal.vue              | vue        |        624 |         18 |          8 |        650 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\PopupModalCompletedTask.vue | vue        |        100 |          0 |         11 |        111 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\PopupModalForm.vue          | vue        |        136 |          0 |         13 |        149 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\VideoView.vue                   | vue        |         10 |          0 |          0 |         10 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\stores\company.js                          | JavaScript |          1 |          0 |          0 |          1 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\stores\forms.js                            | JavaScript |          8 |          0 |          1 |          9 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\dates.js                             | JavaScript |         11 |          0 |          5 |         16 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\formsModel.js                     | JavaScript |         62 |          0 |          3 |         65 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\misc.js                           | JavaScript |         10 |          0 |          2 |         12 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\userModel.js                      | JavaScript |          7 |          0 |          1 |          8 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\Companies\CompaniesCreatorView.vue   | vue        |          2 |          0 |          0 |          2 |
+| c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\HomeView.vue                         | vue        |         95 |          0 |          2 |         97 |
+| Total                                                                                                                |            |        949 |         19 |         51 |      1,019 |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
