@@ -1,12 +1,12 @@
 <template>
   <main v-if="rerenderer">
     <h1 class="text-4xl mb-4"><strong>ViralPlan Creators</strong></h1>
-    <div v-if="user.role != 'admin'">
+    <div v-if="userObject.role != 'admin'">
       <h2 class="text-white text-2xl"><strong>Tus tareas</strong></h2>
-      <div class="w-full h-4 mt-2 text-white flex flex-row" v-if="user.companies.length > 0">
+      <div class="w-full h-4 mt-2 text-white flex flex-row" v-if="userObject.companies.length > 0">
         <span
           :class="{ selected: selectedTab == company, always: true }"
-          v-for="company in user.companies"
+          v-for="company in userObject.companies"
           v-on:click="selectedTab = company"
           >{{ company }}</span
         >
@@ -25,7 +25,7 @@
           <PopupModal
             v-for="companyTask in company.company.tasks"
             v-if="
-              inArray(company.company.name, user.companies) &&
+              inArray(company.company.name, userObject.companies) &&
               selectedTab == company.company.name &&
               rerenderer
             "
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div v-if="user.role != 'admin'">
+    <div v-if="userObject.role != 'admin'">
       <h2 class="text-white text-2xl mt-2"><strong>Tus tareas completadas</strong></h2>
       <div
         class="w-full pb-6 px-6 mt-3 mb-0"
@@ -54,7 +54,7 @@
           <PopupModalCompletedTask
             v-for="companyTask in company.company.completedTasks.slice().reverse()"
             v-if="
-              inArray(company.company.name, user.companies) &&
+              inArray(company.company.name, userObject.companies) &&
               selectedTab == company.company.name &&
               rerenderer
             "
@@ -202,7 +202,8 @@ import {
 
 const companiesStore = companiesArrayStore();
 const formsStore = formsArrayStore();
-const user = userStore();
+const userObject = ref(userStore());
+console.log(userObject)
 const users = usersStore();
 let userSelected = ref('');
 let rerenderer = ref(true);
@@ -214,6 +215,13 @@ watch(companiesStore.companiesArray, () => {
   lateTasks = [];
   for (let i = 0; i < companiesStore.companiesArray.length; i++) {
     try {
+      if (typeof companiesStore.companiesArray[i].company.completedTasks == 'undefined') {
+        companiesStore.companiesArray[i].company.completedTasks = []
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+    try {
       for (let j = 0; j < companiesStore.companiesArray[i].company.tasks.length; j++) {
         if (companiesStore.companiesArray[i].company.tasks[j].date < formatDate()) {
           lateTasks.push(companiesStore.companiesArray[i].company.tasks[j]);
@@ -221,9 +229,8 @@ watch(companiesStore.companiesArray, () => {
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
-    console.log(lateTasks);
   }
   reRenderer();
 })
@@ -249,6 +256,7 @@ function assignCompany(companyName, username) {
         if (companiesStore.companiesArray[j].company.name == companyName) {
           if (typeof companiesStore.companiesArray[j].company.tasks == 'undefined') {
             companiesStore.companiesArray[j].company.tasks = []
+            companiesStore.companiesArray[j].company.completedTasks = []
           }
           if (companiesStore.companiesArray[j].company.tasks.length == 0) {
             companiesStore.companiesArray[j].company.tasks = getFirstTaskList(companyName, formatDate());

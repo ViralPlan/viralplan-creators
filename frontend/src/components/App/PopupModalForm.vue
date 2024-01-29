@@ -55,7 +55,7 @@ for (const [key, value] of Object.entries(props.formVariables)) {
     descripcion.value += '•' + key + value + '\n\n';
   }
 }
-console.log(descripcion);
+
 function reRenderer() {
   rerenderer = !rerenderer;
   nextTick()
