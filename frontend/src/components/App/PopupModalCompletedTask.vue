@@ -1,14 +1,14 @@
 <template>
   <div
+    v-if="rerenderer"
     class="w-full h-10 mt-6 text-black flex flex-col justify-center bg-white"
     style="border-radius: 8px; vertical-align: middle"
-    @click="showModal"
     :class="{ 
       retrasado: props.fecha < formatDate() && user.role != 'admin', 
       hoy: (props.fecha == formatDate()),
       pospuestas: props.status == 'postponed'
     }"
-    v-if="rerenderer"
+    @click="showModal"
   >
     <h3
       class="ml-2 text-lg align-middle"
@@ -63,9 +63,9 @@ const user = userStore();
 let rerenderer = ref(true);
 
 function reRenderer() {
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
   nextTick()
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
 }
 
 function returnTask() {

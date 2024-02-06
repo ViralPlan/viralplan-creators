@@ -160,6 +160,10 @@
         type="text"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       />
+      <AudioRecorder 
+        :videoIndex="videoIndex"
+      ></AudioRecorder>
+
       <button
         class="bg-pink-600 text-white rounded-lg w-full my-8"
         style="height: 5vh"
@@ -179,9 +183,11 @@ const props = defineProps({
   videoIndex: Number,
 });
 import { saveGoodIdea } from '../utils/db/misc';
+import AudioRecorder from '@/components/App/AudioRecorder.vue';
 import { ref } from 'vue';
 import { generateVideo } from '@/utils/plans/promptGPT.js';
 import { companySelectedStore } from '../stores/company.js';
+import 'vue-voice-recording/dist/style.css';
 
 const companyStore = companySelectedStore();
 const idea = ref(companyStore.planSelectedObject.content[props.videoIndex]);

@@ -43,9 +43,11 @@ export async function getUser(email) {
       .find({ 'user.email': email });
 
     if (result.length > 0) {
+      console.log('heyyy')
       return result[0];
     } else {
       try {
+        console.log('heyyy2')
         const document = {
           user: {
             email: email,
@@ -70,32 +72,46 @@ export async function getUser(email) {
   }
 }
 
-export async function updateUser(userObject) {
+/* export async function updateUser() {
   try {
-    const filter = {
-      'user.email': userObject.email,
-    };
-    const options = {
-      upsert: false,
-    };
-    const updateDoc = {
-      $set: {
-        user: userObject,
-      },
-    };
     const {
       BSON: { ObjectId },
     } = Realm;
+    const userField = userStore();
     const app = new Realm.App({ id: 'application-0-qitnr' });
     const credentials = Realm.Credentials.anonymous();
     const user = await app.logIn(credentials);
+    const filter = {
+      'user.email': userField.email,
+    };
     console.assert(user.id === app.currentUser.id);
     const client = app.currentUser.mongoClient('mongodb-atlas');
-    const result = await client
+    const options = { upsert: true };
+    userField.role =
+      typeof userField.role == 'undefined'
+        ? 'planner'
+        : userField.role;
+    userField.companies =
+      typeof userField.companies == 'undefined'
+        ? []
+        : userField.companies;
+    const updateDoc = {
+      $set: {
+        user: {
+          email: userField.email,
+          tier: userField.tier,
+          date: userField.date,
+          tokens: userField.tokens,
+          role: userField.role,
+          companies: userField.companies,
+        },
+      },
+    };
+    await client
       .db('companies')
       .collection('users')
       .updateOne(filter, updateDoc, options);
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.log(err);
   }
-}
+} */

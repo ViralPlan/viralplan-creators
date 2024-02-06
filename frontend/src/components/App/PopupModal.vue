@@ -1,14 +1,14 @@
 <template>
   <div
+    v-if="rerenderer"
     class="w-full h-10 mt-6 text-black flex flex-col justify-center bg-white"
     style="border-radius: 8px; vertical-align: middle"
-    @click="showModal"
     :class="{ 
       retrasado: props.fecha < formatDate() && user.role != 'admin', 
       hoy: (props.fecha == formatDate()),
       pospuestas: props.status == 'postponed'
     }"
-    v-if="rerenderer"
+    @click="showModal"
   >
     <h3
       class="ml-2 text-lg align-middle"
@@ -54,8 +54,8 @@
           </li>
         </ul>
         <textarea
-          id="spokeWithTheClientObservations"
           v-if="spokeWithTheClient == 'Sí'"
+          id="spokeWithTheClientObservations"
           v-model="spokeWithTheClientObservations"
           rows="3"
           placeholder="Detalla el contenido de la conversación"
@@ -86,8 +86,8 @@
           </li>
         </ul>
         <textarea
-          id="clientWorkingAsExpectedObservations"
           v-if="clientWorkingAsExpected == 'No'"
+          id="clientWorkingAsExpectedObservations"
           v-model="clientWorkingAsExpectedObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -118,8 +118,8 @@
           </li>
         </ul>
         <textarea
-          id="problemsFoundObservations"
           v-if="problemsFound == 'Sí'"
+          id="problemsFoundObservations"
           v-model="problemsFoundObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -150,8 +150,8 @@
           </li>
         </ul>
         <textarea
-          id="pendingProblemsObservations"
           v-if="pendingProblems == 'Sí'"
+          id="pendingProblemsObservations"
           v-model="pendingProblemsObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -182,8 +182,8 @@
           </li>
         </ul>
         <textarea
-          id="videoUploadedObservations"
           v-if="videoUploaded == 'No'"
+          id="videoUploadedObservations"
           v-model="videoUploadedObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -214,8 +214,8 @@
           </li>
         </ul>
         <textarea
-          id="videosSentObservations"
           v-if="videosSent == 'Sí'"
+          id="videosSentObservations"
           v-model="videosSentObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -246,8 +246,8 @@
           </li>
         </ul>
         <textarea
-          id="videosAprovedObservations"
           v-if="videosAproved == 'No'"
+          id="videosAprovedObservations"
           v-model="videosAprovedObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -278,8 +278,8 @@
           </li>
         </ul>
         <textarea
-          id="recordingDateObservations"
           v-if="recordingDate == 'Sí'"
+          id="recordingDateObservations"
           v-model="recordingDateObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -310,9 +310,9 @@
           </li>
         </ul>
         <textarea
+          v-if="newNecessity == 'Sí'"
           id="newNecessityObservations"
           v-model="newNecessityObservations"
-          v-if="newNecessity == 'Sí'"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Detallar la nueva necesidad o solicitud"
@@ -342,8 +342,8 @@
           </li>
         </ul>
         <textarea
-          id="ownerInterventionObservations"
           v-if="ownerIntervention == 'Sí'"
+          id="ownerInterventionObservations"
           v-model="ownerInterventionObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -407,8 +407,8 @@
           </li>
         </ul>
         <textarea
-          id="significantDeadlineChangeObservations"
           v-if="significantDeadlineChange == 'Sí'"
+          id="significantDeadlineChangeObservations"
           v-model="significantDeadlineChangeObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -439,8 +439,8 @@
           </li>
         </ul>
         <textarea
-          id="futurePlansObservations"
           v-if="futurePlans == 'Sí'"
+          id="futurePlansObservations"
           v-model="futurePlansObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -471,8 +471,8 @@
           </li>
         </ul>
         <textarea
-          id="improvementsOnInteractionObservations"
           v-if="improvementsOnInteraction == 'Sí'"
+          id="improvementsOnInteractionObservations"
           v-model="improvementsOnInteractionObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -503,8 +503,8 @@
           </li>
         </ul>
         <textarea
-          id="changesRequestedObservations"
           v-if="changesRequested == 'Sí'"
+          id="changesRequestedObservations"
           v-model="changesRequestedObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -545,8 +545,8 @@
           </li>
         </ul>
         <textarea
-          id="generalImprovementObservations"
           v-if="generalImprovement == 'Sí'"
+          id="generalImprovementObservations"
           v-model="generalImprovementObservations"
           rows="3"
           class="block p-2.5 w-full text-sm mt-2 text-gray-900 bg-gray-50 rounded-lg border border-gray-600 focus:ring-pink-500 focus:border-pink-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -674,9 +674,9 @@ const formVariables = ref({
 let rerenderer = ref(true);
 
 function reRenderer() {
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
   nextTick()
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
 }
 
 function completeTask() {

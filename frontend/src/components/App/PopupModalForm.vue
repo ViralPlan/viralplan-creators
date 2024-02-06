@@ -1,9 +1,9 @@
 <template>
   <div
+    v-if="rerenderer"
     class="w-full h-10 mt-6 text-black flex flex-col justify-center bg-white"
     style="border-radius: 8px; vertical-align: middle"
     @click="showModal"
-    v-if="rerenderer"
   >
     <h3
       class="ml-2 text-lg align-middle"
@@ -57,9 +57,9 @@ for (const [key, value] of Object.entries(props.formVariables)) {
 }
 
 function reRenderer() {
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
   nextTick()
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
 }
 
 function completeTask() {

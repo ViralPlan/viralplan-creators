@@ -9,6 +9,7 @@ import PlansView from '../views/Plans/PlansView.vue';
 import PlansEditorView from '../views/Plans/PlansEditorView.vue';
 import PlansCreatorView from '../views/Plans/PlansCreatorView.vue';
 import PlansEraserView from '../views/Plans/PlansEraserView.vue';
+import PlansClientView from '../views/Plans/PlansClientView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,6 +68,11 @@ const router = createRouter({
       component: PlansEraserView,
       beforeEnter: authGuard,
     },
+    {
+      path: '/plans/clientview/:id/:date',
+      name: 'plansClientView',
+      component: PlansClientView,
+    }
   ],
 });
 

@@ -7,47 +7,41 @@ import router from '@/router/index.js';
 import * as Realm from 'realm-web';
 import { formatDate } from '@/utils/dates.js';
 
-export async function updateUser() {
+export async function updateUser(userObject) {
   try {
-    const {
-      BSON: { ObjectId },
-    } = Realm;
-    const userField = userStore();
-    const app = new Realm.App({ id: 'application-0-qitnr' });
-    const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials);
     const filter = {
-      'user.email': userField.email,
+      'user.email': userObject.email,
     };
-    console.assert(user.id === app.currentUser.id);
-    const client = app.currentUser.mongoClient('mongodb-atlas');
-    const options = { upsert: true };
-    userField.role =
-      typeof userField.role == 'undefined'
-        ? 'planner'
-        : userField.role;
-    userField.companies =
-      typeof userField.companies == 'undefined'
-        ? []
-        : userField.companies;
+    const options = {
+      upsert: false,
+    };
     const updateDoc = {
       $set: {
         user: {
-          email: userField.email,
-          tier: userField.tier,
-          date: userField.date,
-          tokens: userField.tokens,
-          role: userField.role,
-          companies: userField.companies,
+          email: userObject.email,
+          tier: userObject.tier,
+          date: userObject.date,
+          tokens: userObject.tokens,
+          role: userObject.role,
+          companies: userObject.companies,
         },
       },
     };
-    await client
+    console.log(updateDoc)
+    const {
+      BSON: { ObjectId },
+    } = Realm;
+    const app = new Realm.App({ id: 'application-0-qitnr' });
+    const credentials = Realm.Credentials.anonymous();
+    const user = await app.logIn(credentials);
+    console.assert(user.id === app.currentUser.id);
+    const client = app.currentUser.mongoClient('mongodb-atlas');
+    const result = await client
       .db('companies')
       .collection('users')
       .updateOne(filter, updateDoc, options);
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
+    console.error(e);
   }
 }
 
@@ -140,14 +134,16 @@ export async function getUserTokens(email) {
       userField.date = result[0].user.date;
       userField.tokens = parseInt(result[0].user.tokens);
       userField.tier = parseInt(result[0].user.tier);
-      userField.role =
-        typeof result[0].user.role == 'undefined'
-          ? 'planner'
-          : result[0].user.role;
-      userField.companies =
-        typeof result[0].user.companies == 'undefined'
-          ? []
-          : result[0].user.companies;
+      if (typeof result[0].user.role == 'undefined') {
+        userField.role = 'planner';
+      } else {
+        userField.role = result[0].user.role;
+      }
+      if (typeof result[0].user.companies == 'undefined') {
+        userField.companies = [];
+      } else {
+        userField.companies = result[0].user.companies;
+      }
 
       if (last_monday != result[0].user.date) {
         const filter = {

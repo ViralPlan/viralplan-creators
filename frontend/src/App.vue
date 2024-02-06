@@ -1,5 +1,5 @@
 <script setup>
-import Sidebar from './components/App/Sidebar.vue';
+import Sidebar from '@/components/App/Sidebar.vue';
 import { useRoute } from 'vue-router';
 import { getUserTokens } from '@/utils/db/misc.js';
 import router from './router/index.js';
@@ -8,15 +8,26 @@ import { companiesArrayStore } from './stores/companies.js';
 import { formsArrayStore } from './stores/forms.js';
 import { userStore } from './stores/user.js';
 import { usersStore } from './stores/users.js';
-import { getUser, getUsers, updateUser } from './utils/db/userModel.js';
+import { getUser, getUsers } from './utils/db/userModel.js';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { processInput } from '@/utils/plans/processInput.js';
-import { save, cancelPlans, cancelCompanies } from '@/utils/db/misc.js';
+import { save, cancelPlans, cancelCompanies, updateUser } from '@/utils/db/misc.js';
 import { watch } from 'vue';
+import { useClipboard, useBreakpoints } from '@vueuse/core'
+
 
 const companyStore = companySelectedStore();
-
 const { isAuthenticated, isLoading, user } = useAuth0();
+
+
+const breakpoints = useBreakpoints({
+  mobile: 450,
+  tablet: 640,
+  laptop: 1024,
+  desktop: 1280,
+})
+
+const isMobile = breakpoints.smaller('laptop')
 
 watch(isLoading, async (currentValue) => {
   if (!currentValue) {
@@ -31,21 +42,7 @@ watch(isLoading, async (currentValue) => {
       const localUser = userStore();
       localUser.email = onlineUser.email;
 
-      let tempUser = await getUser(localUser.email);
-
-      localUser.tier = tempUser.user.tier;
-      localUser.date = tempUser.user.date;
-      localUser.tokens = tempUser.user.tokens;
-      localUser.role =
-        typeof tempUser.user.role == 'undefined'
-          ? 'planner'
-          : tempUser.user.role;
-      localUser.companies =
-        typeof tempUser.user.companies == 'undefined'
-          ? []
-          : tempUser.user.companies;
-
-      localUser.tokens = await getUserTokens(localUser.email);
+      await getUserTokens(localUser.email);
       // updateUser(localUser)
 
       if (localUser.role == 'admin') {
@@ -73,13 +70,16 @@ watch(isLoading, async (currentValue) => {
 
 <template id="main">
   <div class="grid grid-cols-4">
-    <div class="col-span-1 min-h-screen w-4/5">
-      <Sidebar v-if="useRoute().name != 'login'" />
+    <div class="col-span-1 min-h-screen w-4/5" v-if="!isMobile" >
+      <Sidebar v-if="useRoute().name != 'login' && useRoute().name != 'plansClientView'" />
     </div>
-    <div class="col-span-2 mt-8">
+    <div class="col-span-2 mt-8" v-if="!isMobile">
       <router-view />
     </div>
-    <div class="col-span-1 p-8">
+    <div class="col-span-4 mt-8" v-if="isMobile">
+      <router-view />
+    </div>
+    <div class="col-span-1 p-8" v-if="!isMobile">
       <template
         v-if="useRoute().name === 'companies'"
         id="companies"
@@ -250,6 +250,25 @@ watch(isLoading, async (currentValue) => {
           "
         >
           Descargar Plan
+        </button>
+        <button
+          type="button"
+          class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-bold rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 w-4/5 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800"
+          @click="
+            () => {
+              if (companyStore.companySelected == '') {
+                companyStore.companyWarning = true;
+              } else if (companyStore.planSelected == '') {
+                companyStore.planWarning = true;
+              } else {
+                const source = `${window.location.origin}/plans/clientview/${companyStore.companySelectedObject._id.toString()}/${companyStore.planSelectedObject.date}`
+                const { text, copy, copied, isSupported } = useClipboard({ source })
+                copy(source)
+              }
+            }
+          "
+        >
+          Obtener enlace de Plan
         </button>
         <button
           type="button"

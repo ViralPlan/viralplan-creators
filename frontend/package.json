@@ -14,12 +14,15 @@
     "@auth0/auth0-vue": "^2.3.3",
     "@coreui/vue": "^4.10.1",
     "@pdf-lib/fontkit": "^1.1.1",
+    "@vueuse/core": "^10.7.2",
     "abort-controller": "^3.0.0",
     "axios": "^1.6.2",
+    "crypto-js": "^4.2.0",
     "flowbite": "^1.8.1",
     "flowbite-vue": "^0.1.0",
     "fs": "^0.0.1-security",
     "js-base64": "^3.7.5",
+    "js-sha256": "^0.11.0",
     "memfs": "^4.6.0",
     "mongodb": "^6.2.0",
     "node-fetch": "^3.3.2",
@@ -32,6 +35,7 @@
     "vite-plugin-node-polyfills": "^0.15.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
+    "vue-voice-recording": "^1.0.4",
     "vuetify": "^3.3.22"
   },
   "devDependencies": {
@@ -44,6 +48,7 @@
     "prettier": "3.1.1",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.11",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vue3-mq": "^3.1.3"
   }
 }

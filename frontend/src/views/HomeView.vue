@@ -3,11 +3,11 @@
     <h1 class="text-4xl mb-4"><strong>ViralPlan Creators</strong></h1>
     <div v-if="userObject.role != 'admin'">
       <h2 class="text-white text-2xl"><strong>Tus tareas</strong></h2>
-      <div class="w-full h-4 mt-2 text-white flex flex-row" v-if="userObject.companies.length > 0">
+      <div v-if="userObject.companies.length > 0" class="w-full h-4 mt-2 text-white flex flex-row">
         <span
-          :class="{ selected: selectedTab == company, always: true }"
           v-for="company in userObject.companies"
-          v-on:click="selectedTab = company"
+          :class="{ selected: selectedTab == company, always: true }"
+          @click="selectedTab = company"
           >{{ company }}</span
         >
       </div>
@@ -151,7 +151,7 @@
           v-if="rerenderer"
           :fecha="form.form.date"
           :company="form.form.company"
-          :formVariables="form.form.form"
+          :form-variables="form.form.form"
         />
       </div>
       <h2 class="text-white text-2xl mt-2"><strong>Tareas atrasadas</strong></h2>
@@ -184,7 +184,7 @@ import { nextTick, ref, watch } from 'vue';
 import { formatDate } from '../utils/dates';
 import { updateCompanyTasks } from '@/utils/db/companyModel.js';
 import { getFirstTaskList } from '@/assets/taskList.js';
-import { updateUser } from '../utils/db/userModel.js';
+import { updateUser } from '../utils/db/misc.js';
 import PopupModal from '../components/App/PopupModal.vue';
 import PopupModalForm from '../components/App/PopupModalForm.vue';
 import PopupModalCompletedTask from '../components/App/PopupModalCompletedTask.vue';
@@ -203,7 +203,6 @@ import {
 const companiesStore = companiesArrayStore();
 const formsStore = formsArrayStore();
 const userObject = ref(userStore());
-console.log(userObject)
 const users = usersStore();
 let userSelected = ref('');
 let rerenderer = ref(true);
@@ -212,7 +211,7 @@ let selectedTab = ref('');
 let lateTasks = ref([]);
 
 watch(companiesStore.companiesArray, () => {
-  lateTasks = [];
+  lateTasks.value = [];
   for (let i = 0; i < companiesStore.companiesArray.length; i++) {
     try {
       if (typeof companiesStore.companiesArray[i].company.completedTasks == 'undefined') {
@@ -224,8 +223,8 @@ watch(companiesStore.companiesArray, () => {
     try {
       for (let j = 0; j < companiesStore.companiesArray[i].company.tasks.length; j++) {
         if (companiesStore.companiesArray[i].company.tasks[j].date < formatDate()) {
-          lateTasks.push(companiesStore.companiesArray[i].company.tasks[j]);
-          lateTasks[lateTasks.length - 1].company = companiesStore.companiesArray[i].company.name;
+          lateTasks.value.push(companiesStore.companiesArray[i].company.tasks[j]);
+          lateTasks[lateTasks.value.length - 1].company = companiesStore.companiesArray[i].company.name;
         }
       }
     } catch (error) {
@@ -237,9 +236,9 @@ watch(companiesStore.companiesArray, () => {
 
 
 function reRenderer() {
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
   nextTick()
-  rerenderer = !rerenderer;
+  rerenderer.value = !rerenderer.value;
 }
 
 

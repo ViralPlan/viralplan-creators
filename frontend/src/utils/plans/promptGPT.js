@@ -189,13 +189,14 @@ export async function generateVideo(idea, company) {
     titulo: result.titulo,
     duracion: result.duracion,
     personas: result.personas,
-    horario: '15:00h-16:00h',
+    horario: '15:00h-16:00h o 20:00h-21:00h',
     lugares: result.lugares,
     descripcion: result.descripcion,
     extra: '-',
     texto: result.texto + '\n' + 'Objetivo: ' + result.objetivo,
     guion: planos + '\n' + 'Instrucciones de acting: ' + '\n' + acting,
     audio: '',
+    explanation: ''
   };
   if (result.extra) {
     video['extra'] = result.extra;

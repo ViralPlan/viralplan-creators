@@ -1,6 +1,5 @@
 import './assets/main.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
-
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { createAuth0 } from '@auth0/auth0-vue';

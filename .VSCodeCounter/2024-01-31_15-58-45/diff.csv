@@ -1,0 +1,16 @@
+"filename", "language", "vue", "JavaScript", "comment", "blank", "total"
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\App.vue", "vue", -1, 0, 0, -1, -2
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\AudioRecorder.vue", "vue", 102, 0, 0, 8, 110
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\App\PopupModalForm.vue", "vue", -1, 0, 0, 1, 0
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\VideoView.vue", "vue", 6, 0, 0, 1, 7
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\components\VideoViewForClients.vue", "vue", 138, 0, 1, 4, 143
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\router\index.js", "JavaScript", 0, 6, 0, 0, 6
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\misc.js", "JavaScript", 0, -11, 0, 0, -11
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\planModel.js", "JavaScript", 0, 3, 0, 2, 5
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\db\userModel.js", "JavaScript", 0, 14, 0, 0, 14
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\plans\ideaGeneration.js", "JavaScript", 0, -2, 0, 0, -2
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\plans\plan_20.js", "JavaScript", 0, -1, 0, -1, -2
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\utils\plans\promptGPT.js", "JavaScript", 0, 1, 0, 0, 1
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\HomeView.vue", "vue", 8, 0, 0, 0, 8
+"c:\Users\pmpls\Desktop\codebase\ViralPlan\viralplan-creators\frontend\src\views\Plans\PlansClientView.vue", "vue", 62, 0, 0, 5, 67
+"Total", "-", 314, 10, 1, 19, 344

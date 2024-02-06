@@ -42,7 +42,7 @@
             } else {
               tokensWarning = true;
             }
-            updateUser();
+            updateUser(userField);
 
             loading = false;
             companyStore.planSelected = formatDate();
@@ -120,7 +120,7 @@
             } else {
               tokensWarning = true;
             }
-            updateUser();
+            updateUser(userField);
             loading = false;
             companyStore.planSelected = formatDate();
             companyStore.planSelectedObject = {
@@ -270,7 +270,7 @@
 <script setup>
 import { generateIdeas } from '../../utils/plans/promptGPT';
 import { formatDate } from '@/utils/dates.js';
-import { updateUser } from '../../utils/db/misc';
+import { updateUser } from '../../utils/db/misc.js';
 import { ref } from 'vue';
 import { ideaFile } from '../../utils/plans/processInput';
 import { companySelectedStore } from '../../stores/company';
